@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -17,16 +18,23 @@ public class AdminUserAPI {
 
     private final IUserService IUserService;
 
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return new ResponseEntity<>(this.IUserService.getUsers(), HttpStatus.OK);
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDTO> getAllUsers() {
+        return this.IUserService.getUsers();
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> addUser() {
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO addUser(@RequestBody UserDTO userDTO) {
+        return this.IUserService.saveUser(userDTO);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<UserDTO> getUser(@PathVariable Long id) {
+        return this.IUserService.getUser(id);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id) {
@@ -39,7 +47,8 @@ public class AdminUserAPI {
     }
 
     @GetMapping("/{email}/role/{roleName}")
-    public ResponseEntity<UserDTO> addRoleToUser(@PathVariable String roleName, @PathVariable String email) {
-        return new ResponseEntity<>(this.IUserService.addRoleToUser(email, roleName), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO addRoleToUser(@PathVariable String roleName, @PathVariable String email) {
+        return this.IUserService.addRoleToUser(email, roleName);
     }
 }

@@ -23,4 +23,8 @@ public class MapperComponent {
         userDto.setRoleDTOS(roleDTOS);
         return userDto;
     }
+
+    public UserEntity toEntity(UserDTO userDTO) {
+        return this.modelMapper.map(userDTO, UserEntity.class);
+    }
 }

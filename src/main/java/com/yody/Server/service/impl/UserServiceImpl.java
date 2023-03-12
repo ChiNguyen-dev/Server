@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +28,15 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<UserDTO> getUsers() {
-        return  this.userRepo.findAll().stream().map(mapperComponent::toDto).collect(Collectors.toList());
+        return this.userRepo.findAll().stream().map(mapperComponent::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public <S extends UserEntity> S save(S entity) {
-        return userRepo.save(entity);
+    public Optional<UserDTO> getUser(Long id) {
+        Optional<UserEntity> userEntity = this.userRepo.findById(id);
+        return userEntity.map(mapperComponent::toDto);
     }
+
 
     @Override
     public UserDTO addRoleToUser(String email, String roleName) {
@@ -41,5 +44,13 @@ public class UserServiceImpl implements IUserService {
         RoleEntity roleEntity = this.roleRepo.findByName(roleName);
         userEntity.getRoles().add(roleEntity);
         return this.mapperComponent.toDto(this.userRepo.save(userEntity));
+    }
+
+    @Override
+    public UserDTO saveUser(UserDTO userDTO) {
+        UserEntity userInserted = this.userRepo.save(this.mapperComponent.toEntity(userDTO));
+        UserDTO data = this.mapperComponent.toDto(userInserted);
+        data.setPassword(null);
+        return data;
     }
 }

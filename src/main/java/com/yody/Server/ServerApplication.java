@@ -1,11 +1,6 @@
 package com.yody.Server;
 
-import com.yody.Server.entities.RoleEntity;
-import com.yody.Server.entities.UserEntity;
-import com.yody.Server.service.IRoleService;
-import com.yody.Server.service.IUserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -15,7 +10,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class ServerApplication {
@@ -31,19 +25,19 @@ public class ServerApplication {
     }
 
 
-    @Bean
-    CommandLineRunner run(IUserService userService, IRoleService roleService) {
-        return args -> {
-            RoleEntity roleEntity1 = new RoleEntity("ADMIN", new HashSet<>());
-            roleService.save(roleEntity1);
-            RoleEntity roleEntity2 = new RoleEntity("DEVELOPER", new HashSet<>());
-            roleService.save(roleEntity2);
-            RoleEntity roleEntity3 = new RoleEntity("CONTENT", new HashSet<>());
-            roleService.save(roleEntity3);
-            userService.save(new UserEntity("Võ Chí Nguyên", "nguyendev2001@gmai.com", "admin123", new HashSet<>()));
-            userService.save(new UserEntity("Nguyễn Hồng Phú Nhuận", "19130164@gmai.com", "admin123", new HashSet<>()));
-        };
-    }
+//    @Bean
+//    CommandLineRunner run(IUserService userService, IRoleService roleService) {
+//        return args -> {
+//            RoleEntity roleEntity1 = new RoleEntity("ADMIN", new HashSet<>());
+//            roleService.save(roleEntity1);
+//            RoleEntity roleEntity2 = new RoleEntity("DEVELOPER", new HashSet<>());
+//            roleService.save(roleEntity2);
+//            RoleEntity roleEntity3 = new RoleEntity("CONTENT", new HashSet<>());
+//            roleService.save(roleEntity3);
+//            userService.save(new UserEntity("Võ Chí Nguyên", "nguyendev2001@gmai.com", "admin123", new HashSet<>()));
+//            userService.save(new UserEntity("Nguyễn Hồng Phú Nhuận", "19130164@gmai.com", "admin123", new HashSet<>()));
+//        };
+//    }
 
     @Bean
     public CorsFilter corsFilter() {

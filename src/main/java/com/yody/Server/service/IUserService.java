@@ -4,12 +4,15 @@ import com.yody.Server.dto.UserDTO;
 import com.yody.Server.entities.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
 
     List<UserDTO> getUsers();
 
+    Optional<UserDTO> getUser(Long id);
+
     UserDTO addRoleToUser(String email, String roleName);
 
-    <S extends UserEntity> S save(S entity);
+    UserDTO saveUser(UserDTO userDTO);
 }
