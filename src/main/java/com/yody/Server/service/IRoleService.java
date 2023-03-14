@@ -1,8 +1,8 @@
 package com.yody.Server.service;
 
-import com.yody.Server.entities.RoleEntity;
+import com.yody.Server.entities.Role;
 
 public interface IRoleService {
 
-    <S extends RoleEntity> S save(S entity);
+    <S extends Role> S save(S entity);
 }
