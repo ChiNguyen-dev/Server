@@ -2,6 +2,7 @@ package com.yody.Server.components;
 
 import com.yody.Server.dto.RoleDTO;
 import com.yody.Server.dto.UserDTO;
+import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class MapperComponent {
         return userDto;
     }
 
-    public UserEntity toEntity(UserDTO userDTO) {
-        return this.modelMapper.map(userDTO, UserEntity.class);
+    public UserEntity toEntity(UserRegisterRequest userRegisterRequest) {
+        return this.modelMapper.map(userRegisterRequest, UserEntity.class);
     }
 }
