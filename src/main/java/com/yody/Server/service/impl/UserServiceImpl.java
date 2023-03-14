@@ -1,9 +1,11 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.dto.UserDTO;
+import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.RoleEntity;
 import com.yody.Server.entities.UserEntity;
 import com.yody.Server.components.MapperComponent;
+import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.RoleRepo;
 import com.yody.Server.repositories.UserRepo;
 import com.yody.Server.service.IUserService;
@@ -12,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,25 +33,24 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<UserDTO> getUser(Long id) {
-        Optional<UserEntity> userEntity = this.userRepo.findById(id);
-        return userEntity.map(mapperComponent::toDto);
+    public UserDTO getUser(Long id) {
+         UserEntity user = this.userRepo.findById(id).orElseThrow( () -> new NotFondException("user doesn't exist"));
+        return mapperComponent.toDto(user);
     }
 
 
     @Override
-    public UserDTO addRoleToUser(String email, String roleName) {
-        UserEntity userEntity = this.userRepo.findByEmail(email);
+    public UserDTO addRoleToUser(Long id, String roleName) {
+        UserEntity userEntity = this.userRepo.findById(id).orElseThrow(() -> new NotFondException("user does not exits"));
         RoleEntity roleEntity = this.roleRepo.findByName(roleName);
         userEntity.getRoles().add(roleEntity);
         return this.mapperComponent.toDto(this.userRepo.save(userEntity));
     }
 
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
-        UserEntity userInserted = this.userRepo.save(this.mapperComponent.toEntity(userDTO));
+    public UserDTO saveUser(UserRegisterRequest userRegisterRequest) {
+        UserEntity userInserted = this.userRepo.save(this.mapperComponent.toEntity(userRegisterRequest));
         UserDTO data = this.mapperComponent.toDto(userInserted);
-        data.setPassword(null);
         return data;
     }
 }

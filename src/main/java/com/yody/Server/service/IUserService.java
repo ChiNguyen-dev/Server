@@ -1,6 +1,7 @@
 package com.yody.Server.service;
 
 import com.yody.Server.dto.UserDTO;
+import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.UserEntity;
 
 import java.util.List;
@@ -10,9 +11,9 @@ public interface IUserService {
 
     List<UserDTO> getUsers();
 
-    Optional<UserDTO> getUser(Long id);
+    UserDTO getUser(Long id);
 
-    UserDTO addRoleToUser(String email, String roleName);
+    UserDTO addRoleToUser(Long id, String roleName);
 
-    UserDTO saveUser(UserDTO userDTO);
+    UserDTO saveUser(UserRegisterRequest userRegisterRequest);
 }

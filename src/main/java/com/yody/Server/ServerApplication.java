@@ -25,20 +25,6 @@ public class ServerApplication {
     }
 
 
-//    @Bean
-//    CommandLineRunner run(IUserService userService, IRoleService roleService) {
-//        return args -> {
-//            RoleEntity roleEntity1 = new RoleEntity("ADMIN", new HashSet<>());
-//            roleService.save(roleEntity1);
-//            RoleEntity roleEntity2 = new RoleEntity("DEVELOPER", new HashSet<>());
-//            roleService.save(roleEntity2);
-//            RoleEntity roleEntity3 = new RoleEntity("CONTENT", new HashSet<>());
-//            roleService.save(roleEntity3);
-//            userService.save(new UserEntity("Võ Chí Nguyên", "nguyendev2001@gmai.com", "admin123", new HashSet<>()));
-//            userService.save(new UserEntity("Nguyễn Hồng Phú Nhuận", "19130164@gmai.com", "admin123", new HashSet<>()));
-//        };
-//    }
-
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
