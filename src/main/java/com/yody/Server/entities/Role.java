@@ -17,11 +17,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "roles")
-public class RoleEntity extends BaseEntity implements Serializable {
+public class Role extends BaseEntity implements Serializable {
     @Column
     private String name;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 }

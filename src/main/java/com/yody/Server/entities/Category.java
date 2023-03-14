@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categories")
-public class CategoryEntity extends BaseEntity implements Serializable {
+public class Category extends BaseEntity implements Serializable {
 
     @Column
     private String name;

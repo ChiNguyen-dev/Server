@@ -1,6 +1,6 @@
 package com.yody.Server.service.impl;
 
-import com.yody.Server.entities.RoleEntity;
+import com.yody.Server.entities.Role;
 import com.yody.Server.repositories.RoleRepo;
 import com.yody.Server.service.IRoleService;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public <S extends RoleEntity> S save(S entity) {
+    public <S extends Role> S save(S entity) {
         return roleRepo.save(entity);
     }
 }
