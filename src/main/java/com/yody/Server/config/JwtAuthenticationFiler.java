@@ -30,14 +30,14 @@ public class JwtAuthenticationFiler extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-            final String authHeader = request.getHeader("Authorization");
             final String jwt;
             final String userEmail;
+            final String authHeader = request.getHeader("Authorization");
+
             if (authHeader == null || !authHeader.startsWith("Bearer ")){
                 filterChain.doFilter(request, response);
                 return;
             }
-            try {
                 jwt = authHeader.substring(7);
                 userEmail = jwtService.extractUsername(jwt);
                 if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -52,11 +52,7 @@ public class JwtAuthenticationFiler extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
-            } catch (Exception e){
-                log.error("eror");
-            }
-
-
+                filterChain.doFilter(request, response);
 
     }
 }
