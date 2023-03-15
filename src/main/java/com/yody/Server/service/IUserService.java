@@ -14,5 +14,5 @@ public interface IUserService {
     UserDTO addRoleToUser(Long id, String roleName);
 
     UserDTO saveUser(UserRegisterRequest userRegisterRequest);
-//    String authentication(String email, String password);
+    String authentication(String email, String password);
 }

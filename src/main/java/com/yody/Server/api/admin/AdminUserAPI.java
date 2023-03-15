@@ -4,14 +4,14 @@ import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/users")
@@ -23,6 +23,12 @@ public class AdminUserAPI {
     @ResponseStatus(HttpStatus.OK)
     public List<UserDTO> getAllUsers() {
         return this.IUserService.getUsers();
+    }
+
+    @PostMapping("/authentication")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String authentication(String email, String password){
+        return this.IUserService.authentication(email, password);
     }
 
     @PostMapping
@@ -52,4 +58,5 @@ public class AdminUserAPI {
     public UserDTO addRoleToUser(@PathVariable String roleName, @PathVariable Long id) {
         return this.IUserService.addRoleToUser(id, roleName);
     }
+
 }

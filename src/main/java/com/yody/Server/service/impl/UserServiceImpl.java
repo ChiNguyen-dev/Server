@@ -1,6 +1,7 @@
 package com.yody.Server.service.impl;
 
 //import com.yody.Server.config.JwtComponent;
+import com.yody.Server.config.JwtService;
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.Role;
@@ -12,6 +13,10 @@ import com.yody.Server.repositories.UserRepo;
 import com.yody.Server.service.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +25,11 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 public class UserServiceImpl implements IUserService {
-//    private final AuthenticationManager authenticationManager ;
-//    private final CustomerUserDetailsService customerUserDetailsService;
-//    private final JwtComponent jwt;
+    private final AuthenticationManager authenticationManager ;
     private final UserRepo userRepo;
-
+    private final  JwtService jwtService;
     private final RoleRepo roleRepo;
 
     private final MapperComponent mapperComponent;
@@ -53,25 +57,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserDTO saveUser(UserRegisterRequest userRegisterRequest) {
         User userInserted = this.userRepo.save(this.mapperComponent.toEntity(userRegisterRequest));
-        UserDTO data = this.mapperComponent.toDto(userInserted);
-        return data;
+        return this.mapperComponent.toDto(userInserted);
     }
 
-//    @Override
-//    public String authentication(String email, String password) {
-//        Authentication authentication= authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        email,
-//                        password
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        User user = (User) this.customerUserDetailsService.loadUserByUsername(email);
-//        List<String> rolesNames = new ArrayList<>();
-//        user.getRoles().forEach(r-> rolesNames.add(r.getName()));
-//        String token = jwt.generateToken(user.getUsername(),rolesNames);
-//        return token;
-//    }
+    @Override
+    public String authentication(String email, String password) {
+        Authentication authentication= authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        email,
+                        password
+                )
+        );
+       var user = this.userRepo.findByEmail(email).orElseThrow(() -> new NotFondException("not found"));
+        return jwtService.generateToken(user);
+    }
 
 
 }
