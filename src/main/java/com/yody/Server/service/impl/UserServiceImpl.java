@@ -73,6 +73,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String authentication(AuthenticationRequest authenticationRequest) {
+
           try {
               Authentication authentication= authenticationManager.authenticate(
                       new UsernamePasswordAuthenticationToken(

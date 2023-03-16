@@ -1,6 +1,7 @@
 package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.AuthenticationRequest;
+import com.yody.Server.dto.AuthenticationResponse;
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.service.IUserService;
@@ -27,13 +28,13 @@ public class AdminUserAPI {
         return this.IUserService.getUsers();
     }
 
-    @PostMapping("/authentication")
-    @ResponseStatus(HttpStatus.OK)
-    public String authentication(@RequestBody AuthenticationRequest authenticationRequest){
-        return this.IUserService.authentication(authenticationRequest);
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest authenticationRequest){
+        String token = this.IUserService.authentication(authenticationRequest);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(token).build());
     }
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO addUser(@RequestBody UserRegisterRequest userRegisterRequest) {
         return this.IUserService.saveUser(userRegisterRequest);
