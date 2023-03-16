@@ -1,27 +1,26 @@
 package com.yody.Server.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Builder
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
     @Column(name = "fullname", length = 50)
     private String fullName;
     @Column(name = "email", length = 50)
     private String email;
-    @Column(name = "password", length = 32)
+    @Column(name = "password", length = 100)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER  , cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_role",
@@ -41,6 +40,10 @@ public class User extends BaseEntity implements UserDetails {
         return this.email;
     }
 
+    @Override
+    public String getPassword(){
+        return this.password;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

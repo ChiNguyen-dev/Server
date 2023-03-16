@@ -1,6 +1,8 @@
 package com.yody.Server.service.impl;
 
 //import com.yody.Server.config.JwtComponent;
+import com.yody.Server.config.JwtService;
+import com.yody.Server.dto.AuthenticationRequest;
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.Role;
@@ -12,22 +14,29 @@ import com.yody.Server.repositories.UserRepo;
 import com.yody.Server.service.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 public class UserServiceImpl implements IUserService {
-//    private final AuthenticationManager authenticationManager ;
-//    private final CustomerUserDetailsService customerUserDetailsService;
-//    private final JwtComponent jwt;
+    private final AuthenticationManager authenticationManager ;
     private final UserRepo userRepo;
-
+    private final  JwtService jwtService;
     private final RoleRepo roleRepo;
-
+    private final PasswordEncoder passwordEncoder;
+    UserDetailsService userDetailsService;
     private final MapperComponent mapperComponent;
 
     @Override
@@ -52,26 +61,33 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO saveUser(UserRegisterRequest userRegisterRequest) {
-        User userInserted = this.userRepo.save(this.mapperComponent.toEntity(userRegisterRequest));
-        UserDTO data = this.mapperComponent.toDto(userInserted);
-        return data;
+        User user = User.builder()
+                .fullName(userRegisterRequest.getFullName())
+                .email(userRegisterRequest.getEmail())
+                .password(passwordEncoder.encode(userRegisterRequest.getPassword()))
+                .roles(new HashSet<>())
+                .build();
+        User userInserted = this.userRepo.save(user);
+        return this.mapperComponent.toDto(userInserted);
     }
 
-//    @Override
-//    public String authentication(String email, String password) {
-//        Authentication authentication= authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        email,
-//                        password
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        User user = (User) this.customerUserDetailsService.loadUserByUsername(email);
-//        List<String> rolesNames = new ArrayList<>();
-//        user.getRoles().forEach(r-> rolesNames.add(r.getName()));
-//        String token = jwt.generateToken(user.getUsername(),rolesNames);
-//        return token;
-//    }
+    @Override
+    public String authentication(AuthenticationRequest authenticationRequest) {
+          try {
+              Authentication authentication= authenticationManager.authenticate(
+                      new UsernamePasswordAuthenticationToken(
+                              authenticationRequest.getEmail(),
+                              authenticationRequest.getPassword()
+                      )
+              );
+          } catch (Exception e){
+              e.printStackTrace();
+          }
+
+       User user = this.userRepo.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new NotFondException("not found"));
+
+        return jwtService.generateToken(user);
+    }
 
 
 }

@@ -5,12 +5,13 @@ import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MapperComponent {

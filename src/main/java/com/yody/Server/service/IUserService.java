@@ -1,5 +1,6 @@
 package com.yody.Server.service;
 
+import com.yody.Server.dto.AuthenticationRequest;
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 
@@ -14,5 +15,5 @@ public interface IUserService {
     UserDTO addRoleToUser(Long id, String roleName);
 
     UserDTO saveUser(UserRegisterRequest userRegisterRequest);
-//    String authentication(String email, String password);
+    String authentication(AuthenticationRequest authenticationRequest);
 }
