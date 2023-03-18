@@ -1,7 +1,6 @@
 package com.yody.Server.config;
 
-import com.yody.Server.repositories.UserRepo;
-import lombok.AllArgsConstructor;
+import com.yody.Server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @Slf4j
 public class ApplicationConfig {
-    private final UserRepo repo;
+    private final UserRepository repo;
     @Bean
     UserDetailsService findUserByEmail(){
         return username -> repo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));

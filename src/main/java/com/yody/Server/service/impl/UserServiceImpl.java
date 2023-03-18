@@ -9,8 +9,8 @@ import com.yody.Server.entities.Role;
 import com.yody.Server.entities.User;
 import com.yody.Server.components.MapperComponent;
 import com.yody.Server.exception.NotFondException;
-import com.yody.Server.repositories.RoleRepo;
-import com.yody.Server.repositories.UserRepo;
+import com.yody.Server.repositories.RoleRepository;
+import com.yody.Server.repositories.UserRepository;
 import com.yody.Server.service.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -32,31 +32,31 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserServiceImpl implements IUserService {
     private final AuthenticationManager authenticationManager ;
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
     private final  JwtService jwtService;
-    private final RoleRepo roleRepo;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     UserDetailsService userDetailsService;
     private final MapperComponent mapperComponent;
 
     @Override
     public List<UserDTO> getUsers() {
-        return this.userRepo.findAll().stream().map(mapperComponent::toDto).collect(Collectors.toList());
+        return this.userRepository.findAll().stream().map(mapperComponent::toDto).collect(Collectors.toList());
     }
 
     @Override
     public UserDTO getUser(Long id) {
-         User user = this.userRepo.findById(id).orElseThrow( () -> new NotFondException("user doesn't exist"));
+         User user = this.userRepository.findById(id).orElseThrow( () -> new NotFondException("user doesn't exist"));
         return mapperComponent.toDto(user);
     }
 
 
     @Override
     public UserDTO addRoleToUser(Long id, String roleName) {
-        User user = this.userRepo.findById(id).orElseThrow(() -> new NotFondException("user does not exits"));
-        Role role = this.roleRepo.findByName(roleName);
+        User user = this.userRepository.findById(id).orElseThrow(() -> new NotFondException("user does not exits"));
+        Role role = this.roleRepository.findByName(roleName);
         user.getRoles().add(role);
-        return this.mapperComponent.toDto(this.userRepo.save(user));
+        return this.mapperComponent.toDto(this.userRepository.save(user));
     }
 
     @Override
@@ -67,7 +67,9 @@ public class UserServiceImpl implements IUserService {
                 .password(passwordEncoder.encode(userRegisterRequest.getPassword()))
                 .roles(new HashSet<>())
                 .build();
-        User userInserted = this.userRepo.save(user);
+        Role role = roleRepository.findByName("USER");
+        user.addRole(role);
+        User userInserted = this.userRepository.save(user);
         return this.mapperComponent.toDto(userInserted);
     }
 
@@ -85,7 +87,7 @@ public class UserServiceImpl implements IUserService {
               e.printStackTrace();
           }
 
-       User user = this.userRepo.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new NotFondException("not found"));
+       User user = this.userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new NotFondException("not found"));
 
         return jwtService.generateToken(user);
     }

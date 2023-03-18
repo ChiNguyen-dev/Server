@@ -28,18 +28,6 @@ public class AdminUserAPI {
         return this.IUserService.getUsers();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest authenticationRequest){
-        String token = this.IUserService.authentication(authenticationRequest);
-        return ResponseEntity.ok(AuthenticationResponse.builder().token(token).build());
-    }
-
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO addUser(@RequestBody UserRegisterRequest userRegisterRequest) {
-        return this.IUserService.saveUser(userRegisterRequest);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUser(@PathVariable Long id) {

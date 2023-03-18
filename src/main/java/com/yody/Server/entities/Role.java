@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "roles")
 public class Role extends BaseEntity implements Serializable {
     @Column

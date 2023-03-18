@@ -22,7 +22,7 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
     @Column(name = "password", length = 100)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER  , cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER  , cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -30,7 +30,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> roles = new HashSet<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        Set<GrantedAuthority> authorities = new HashSet<>();
         this.roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return authorities;
     }
@@ -62,5 +62,8 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    public void addRole(Role role){
+        this.roles.add(role);
     }
 }
