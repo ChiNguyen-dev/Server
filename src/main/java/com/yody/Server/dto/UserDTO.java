@@ -1,6 +1,5 @@
 package com.yody.Server.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.HashSet;

@@ -20,7 +20,7 @@ public class AdminUserAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> getUsers() {
         return this.IUserService.getUsers();
     }
 
