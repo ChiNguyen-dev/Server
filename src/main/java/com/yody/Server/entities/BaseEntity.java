@@ -1,11 +1,13 @@
 package com.yody.Server.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
 @MappedSuperclass
+@Data
 public abstract class BaseEntity {
 
     @Id
@@ -19,23 +21,4 @@ public abstract class BaseEntity {
     @CreationTimestamp
     private Timestamp updateAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Timestamp getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Timestamp createAt) {
-        this.createAt = createAt;
-    }
-
-    public Timestamp getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Timestamp updateAt) {
-        this.updateAt = updateAt;
-    }
 }
