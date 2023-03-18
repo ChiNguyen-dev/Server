@@ -50,5 +50,13 @@ public class CategoryImpl implements ICategoryService {
         return this.categoryMapper.toDto(updatedCategory);
     }
 
-
+    @Override
+    public boolean delete(Long id) {
+        boolean exists = this.categoryRepository.existsById(id);
+        if(exists) {
+            this.categoryRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }
