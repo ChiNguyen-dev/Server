@@ -18,8 +18,19 @@ public class AdminCategoryAPI {
         return this.iCategoryService.getCategories();
     }
 
+    @GetMapping("/{id}")
+    public CategoryDTO getCategoryById(@PathVariable Long id) {
+        return this.iCategoryService.getCategoryById(id);
+    }
+
     @PostMapping
     public CategoryDTO addCategory(@RequestBody CategoryDTO categoryDTO){
         return this.iCategoryService.addCategory(categoryDTO);
     }
+
+    @PutMapping("/{id}")
+    public CategoryDTO update(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
+        return this.iCategoryService.update(id, categoryDTO);
+    }
+
 }
