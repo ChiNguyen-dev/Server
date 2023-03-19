@@ -9,7 +9,7 @@ import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
 import com.yody.Server.entities.Role;
 import com.yody.Server.entities.User;
-import com.yody.Server.exception.NotFondException;
+import com.yody.Server.entities.exception.NotFondException;
 import com.yody.Server.repositories.RoleRepository;
 import com.yody.Server.repositories.UserRepository;
 import com.yody.Server.service.IUserService;

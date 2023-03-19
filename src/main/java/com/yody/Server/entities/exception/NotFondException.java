@@ -1,4 +1,4 @@
-package com.yody.Server.exception;
+package com.yody.Server.entities.exception;
 
 public class NotFondException extends RuntimeException{
     public NotFondException(String message) {

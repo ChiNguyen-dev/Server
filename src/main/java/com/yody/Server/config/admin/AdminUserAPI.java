@@ -1,4 +1,4 @@
-package com.yody.Server.api.admin;
+package com.yody.Server.config.admin;
 
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.service.IUserService;

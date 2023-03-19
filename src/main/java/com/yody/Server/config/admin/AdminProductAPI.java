@@ -1,4 +1,4 @@
-package com.yody.Server.api.admin;
+package com.yody.Server.config.admin;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
