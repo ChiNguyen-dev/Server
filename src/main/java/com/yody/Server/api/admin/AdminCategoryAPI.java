@@ -1,4 +1,4 @@
-package com.yody.Server.config.admin;
+package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.CategoryDTO;
 import com.yody.Server.dto.CategoryRequestDTO;

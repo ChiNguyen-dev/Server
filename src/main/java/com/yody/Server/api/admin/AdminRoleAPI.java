@@ -1,4 +1,4 @@
-package com.yody.Server.config.admin;
+package com.yody.Server.api.admin;
 
 import com.yody.Server.service.IRoleService;
 import lombok.RequiredArgsConstructor;
