@@ -1,9 +1,11 @@
 package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.CategoryDTO;
+import com.yody.Server.dto.CategoryRequestDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class AdminCategoryAPI {
 
     public final ICategoryService iCategoryService;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getCategories() {
@@ -28,20 +31,19 @@ public class AdminCategoryAPI {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDTO addCategory(@RequestBody CategoryDTO categoryDTO){
-        return this.iCategoryService.addCategory(categoryDTO);
+    public CategoryDTO addCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) {
+        return this.iCategoryService.addCategory(categoryRequestDTO);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDTO update(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
-        return this.iCategoryService.update(id, categoryDTO);
+    public CategoryDTO update(@RequestBody CategoryRequestDTO categoryRequestDTO, @PathVariable Long id) {
+        return this.iCategoryService.update(id, categoryRequestDTO);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String delete(@PathVariable Long id){
-        if(this.iCategoryService.delete(id))  return "Delete Category Successfully";
-        return "Category not found";
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        this.iCategoryService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
