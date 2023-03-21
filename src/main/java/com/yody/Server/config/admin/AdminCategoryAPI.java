@@ -42,7 +42,7 @@ public class AdminCategoryAPI {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         this.iCategoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
