@@ -8,6 +8,7 @@ import com.yody.Server.entities.Category;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.service.ICategoryService;
+import com.yody.Server.utils.GenerateSlug;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
