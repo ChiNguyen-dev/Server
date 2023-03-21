@@ -8,6 +8,7 @@ import com.yody.Server.entities.Category;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.service.ICategoryService;
+import com.yody.Server.utils.GenerateSlug;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,20 +36,30 @@ public class CategoryImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO addCategory(CategoryRequestDTO categoryDTO) {
-        Category category = this.categoryRepository.save(this.categoryMapper.toEntity(categoryDTO));
-        return this.categoryMapper.toDto(category);
+    public CategoryDTO addCategory(CategoryRequestDTO categoryRequestDTO) {
+        Category categoryEntity = Category.builder()
+                .name(categoryRequestDTO.getName())
+                .parentId(categoryRequestDTO.getParentId())
+                .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
+                .build();
+        System.out.println();
+        return this.categoryMapper.toDto(this.categoryRepository.save(categoryEntity));
     }
 
     @Override
-    public CategoryDTO update(Long id, CategoryRequestDTO categoryDTO) {
-        Category categoryEntity =this.categoryMapper.toEntity(categoryDTO);
-        Category updatedCategory = this.categoryRepository.findById(id).map(category -> {
-                  category.setName(categoryEntity.getName());
-                  category.setSlug(categoryEntity.getSlug());
-                  category.setParentId(categoryEntity.getParentId());
-                  return this.categoryRepository.save(category);
-                }).orElseThrow( () -> new NotFondException("Category Not Found By Id: " + id) );
+    public CategoryDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
+        Category categoryEntity = Category.builder()
+                .name(categoryRequestDTO.getName())
+                .parentId(categoryRequestDTO.getParentId())
+                .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
+                .build();
+        System.out.println();
+        Category updatedCategory = this.categoryRepository.findById(id).map(caterory -> {
+            caterory.setName(categoryEntity.getName());
+            caterory.setSlug(categoryEntity.getSlug());
+            caterory.setParentId(categoryEntity.getParentId());
+            return this.categoryRepository.save(caterory);
+        }).orElseThrow(() -> new NotFondException("Category Not Found By Id: " + id));
         return this.categoryMapper.toDto(updatedCategory);
     }
 
