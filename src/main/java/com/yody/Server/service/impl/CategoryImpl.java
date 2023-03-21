@@ -42,6 +42,7 @@ public class CategoryImpl implements ICategoryService {
                 .parentId(categoryRequestDTO.getParentId())
                 .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
                 .build();
+        System.out.println();
         return this.categoryMapper.toDto(this.categoryRepository.save(categoryEntity));
     }
 
@@ -52,6 +53,7 @@ public class CategoryImpl implements ICategoryService {
                 .parentId(categoryRequestDTO.getParentId())
                 .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
                 .build();
+        System.out.println();
         Category updatedCategory = this.categoryRepository.findById(id).map(caterory -> {
             caterory.setName(categoryEntity.getName());
             caterory.setSlug(categoryEntity.getSlug());
