@@ -1,6 +1,7 @@
 package com.yody.Server.components;
 
 import com.yody.Server.dto.CategoryDTO;
+import com.yody.Server.dto.CategoryRequestDTO;
 import com.yody.Server.entities.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,7 @@ public class CategoryMapper {
        return this.modelMapper.map(category, CategoryDTO.class);
     }
 
-    public Category toEntity(CategoryDTO categoryDTO) {
+    public Category toEntity(CategoryRequestDTO categoryDTO) {
         return this.modelMapper.map(categoryDTO, Category.class);
     }
 }
