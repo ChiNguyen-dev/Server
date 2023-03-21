@@ -1,7 +1,7 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.entities.Product;
-import com.yody.Server.entities.exception.NotFondException;
+import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.service.IProductService;
 import lombok.AllArgsConstructor;
