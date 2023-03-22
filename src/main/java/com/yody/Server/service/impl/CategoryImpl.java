@@ -24,6 +24,7 @@ public class CategoryImpl implements ICategoryService {
     public final CategoryRepository categoryRepository;
 
     private final CategoryMapper categoryMapper;
+
     @Override
     public List<CategoryDTO> getCategories() {
         return this.categoryRepository.findAll().stream().map(categoryMapper::toDto).collect(Collectors.toList());
@@ -31,7 +32,7 @@ public class CategoryImpl implements ICategoryService {
 
     @Override
     public CategoryDTO getCategoryById(Long id) {
-        Category category = this.categoryRepository.findById(id).orElseThrow( () -> new NotFondException("Category Not Found By Id: " + id));
+        Category category = this.categoryRepository.findById(id).orElseThrow(() -> new NotFondException("Category Not Found By Id: " + id));
         return this.categoryMapper.toDto(category);
     }
 
@@ -42,7 +43,6 @@ public class CategoryImpl implements ICategoryService {
                 .parentId(categoryRequestDTO.getParentId())
                 .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
                 .build();
-        System.out.println();
         return this.categoryMapper.toDto(this.categoryRepository.save(categoryEntity));
     }
 
@@ -53,7 +53,6 @@ public class CategoryImpl implements ICategoryService {
                 .parentId(categoryRequestDTO.getParentId())
                 .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
                 .build();
-        System.out.println();
         Category updatedCategory = this.categoryRepository.findById(id).map(caterory -> {
             caterory.setName(categoryEntity.getName());
             caterory.setSlug(categoryEntity.getSlug());
@@ -66,7 +65,7 @@ public class CategoryImpl implements ICategoryService {
     @Override
     public boolean delete(Long id) {
         boolean exists = this.categoryRepository.existsById(id);
-        if(exists) {
+        if (exists) {
             this.categoryRepository.deleteById(id);
             return true;
         }
