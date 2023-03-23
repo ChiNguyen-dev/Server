@@ -17,8 +17,8 @@ public class AuthenticationController {
     private final IUserService userService;
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest authenticationRequest){
-        String token = this.userService.authentication(authenticationRequest);
-        return ResponseEntity.ok(AuthenticationResponse.builder().token(token).build());
+        AuthenticationResponse response = this.userService.authentication(authenticationRequest);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")

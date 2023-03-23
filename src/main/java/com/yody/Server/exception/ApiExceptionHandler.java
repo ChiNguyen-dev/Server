@@ -12,5 +12,8 @@ public class ApiExceptionHandler {
     public ResponseEntity<String> handleNotFoundException(Exception e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler(value = {InvalidException.class})
+    public ResponseEntity<String> handleInvalidException(Exception e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }

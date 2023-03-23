@@ -5,8 +5,10 @@ package com.yody.Server.service.impl;
 import com.yody.Server.components.MapperComponent;
 import com.yody.Server.config.JwtService;
 import com.yody.Server.dto.AuthenticationRequest;
+import com.yody.Server.dto.AuthenticationResponse;
 import com.yody.Server.dto.UserDTO;
 import com.yody.Server.dto.UserRegisterRequest;
+import com.yody.Server.exception.InvalidException;
 import com.yody.Server.service.IUserService;
 import com.yody.Server.entities.Role;
 import com.yody.Server.entities.User;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,9 +35,9 @@ import java.util.stream.Collectors;
 @Transactional
 @Slf4j
 public class UserServiceImpl implements IUserService {
-    private final AuthenticationManager authenticationManager ;
+    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final  JwtService jwtService;
+    private final JwtService jwtService;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     UserDetailsService userDetailsService;
@@ -47,7 +50,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO getUser(Long id) {
-         User user = this.userRepository.findById(id).orElseThrow( () -> new NotFondException("user doesn't exist"));
+        User user = this.userRepository.findById(id).orElseThrow(() -> new NotFondException("user doesn't exist"));
         return mapperComponent.toDto(user);
     }
 
@@ -75,22 +78,35 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String authentication(AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse authentication(AuthenticationRequest authenticationRequest) {
 
-          try {
-              Authentication authentication= authenticationManager.authenticate(
-                      new UsernamePasswordAuthenticationToken(
-                              authenticationRequest.getEmail(),
-                              authenticationRequest.getPassword()
-                      )
-              );
-          } catch (Exception e){
-              e.printStackTrace();
-          }
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getEmail(),
+                            authenticationRequest.getPassword()
+                    )
+            );
+            User user = this.userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new NotFondException("not found"));
+            List<String> authorities = user
+                    .getAuthorities()
+                    .stream()
+                    .map(grantedAuthority -> grantedAuthority.getAuthority())
+                    .collect(Collectors.toList());
+            ;
 
-       User user = this.userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new NotFondException("not found"));
+            return AuthenticationResponse
+                    .builder()
+                    .token(jwtService.generateToken(user))
+                    .type("bearer")
+                    .principle(user.getEmail())
+                    .username(user.getUsername())
+                    .roles(authorities)
+                    .build();
 
-        return jwtService.generateToken(user);
+        } catch (Exception e) {
+            throw new InvalidException("Invalid User");
+        }
     }
 
 
