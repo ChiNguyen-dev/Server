@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(new HashMap<>())
@@ -29,6 +29,7 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
     public String getEmailFromJWT(String token) {
         Claims claims = Jwts
                 .parserBuilder()
@@ -38,20 +39,21 @@ public class JwtService {
                 .getBody();
         return claims.getSubject();
     }
-    public boolean isTokenValid(String token){
-        try{
+
+    public boolean isTokenValid(String token) {
+        try {
             Jwts
                     .parserBuilder()
                     .setSigningKey(getSignInKey())
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (Exception e){
-            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
+        } catch (Exception e) {
+           return  false;
         }
     }
 
-    private Key getSignInKey(){
+    private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
