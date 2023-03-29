@@ -1,6 +1,7 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.entities.Product;
+import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,4 +23,11 @@ public class ProductController {
     public Product getProductById(@PathVariable Long id){
         return this.productService.getProductById(id);
     }
+
+    @GetMapping("/{id}/variants")
+    public List<ProductVariant> getProductVariantByProductId(@PathVariable Long id){
+        return this.productService.getVariantsByProductId(id);
+    }
+
+
 }

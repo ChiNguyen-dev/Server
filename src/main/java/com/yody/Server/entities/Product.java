@@ -1,10 +1,11 @@
 package com.yody.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -19,28 +20,23 @@ public class Product extends BaseEntity implements Serializable {
     private String name;
 
     @Column
-    private String price;
+    private BigDecimal price;
 
-    @Column(columnDefinition="Text")
+    @Column(columnDefinition = "Text")
     private String slug;
 
-    @Column(columnDefinition="Text")
-    private String featureImagePath;
+    @Column(columnDefinition = "Text")
+    private String imgUrl;
 
-    @Column(columnDefinition="Text")
-    private String shortDesc;
 
-    @Column(columnDefinition="Text")
+    @Column(columnDefinition = "Text")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany
-    @JoinTable(name = "product_attributes",
-        joinColumns = @JoinColumn(name = "attribute_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Attribute> attributes = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<ProductVariant> variants;
+
 }

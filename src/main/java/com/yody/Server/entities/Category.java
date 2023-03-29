@@ -20,7 +20,6 @@ import java.util.Set;
 @Builder
 @Table(name = "categories")
 public class Category extends BaseEntity implements Serializable {
-
     @Column
     private String name;
     @Column
