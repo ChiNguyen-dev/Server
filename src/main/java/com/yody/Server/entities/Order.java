@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Builder
 @Table(name = "orders")
 public class Order extends BaseEntity implements Serializable {
-
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
