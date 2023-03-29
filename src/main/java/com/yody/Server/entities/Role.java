@@ -24,5 +24,5 @@ public class Role extends BaseEntity implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users;
 }

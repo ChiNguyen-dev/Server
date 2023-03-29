@@ -5,12 +5,14 @@ import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.service.IProductService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ProductServiceImpl implements IProductService {
     private final ProductRepository repository;
 
