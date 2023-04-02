@@ -15,12 +15,16 @@ import java.io.Serializable;
 @Table(name = "product_variants")
 public class ProductVariant extends BaseEntity implements Serializable {
 
-    private String color;
-    private String size;
-    private String sku;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
+    private Size size;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "color_id", referencedColumnName = "id")
+    private Color color;
+
+    @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
-
 }

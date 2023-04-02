@@ -3,7 +3,7 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.components.CategoryMapper;
 import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryRequestDTO;
+import com.yody.Server.dto.CategoryReqDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Transactional
-public class CategoryImpl implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService {
 
-    public final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     private final CategoryMapper categoryMapper;
 
@@ -37,7 +37,7 @@ public class CategoryImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO addCategory(CategoryRequestDTO categoryRequestDTO) {
+    public CategoryDTO addCategory(CategoryReqDTO categoryRequestDTO) {
         Category categoryEntity = Category.builder()
                 .name(categoryRequestDTO.getName())
                 .parentId(categoryRequestDTO.getParentId())
@@ -47,7 +47,7 @@ public class CategoryImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
+    public CategoryDTO update(Long id, CategoryReqDTO categoryRequestDTO) {
         Category categoryEntity = Category.builder()
                 .name(categoryRequestDTO.getName())
                 .parentId(categoryRequestDTO.getParentId())
