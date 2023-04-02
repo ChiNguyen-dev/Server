@@ -1,7 +1,7 @@
 package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryRequestDTO;
+import com.yody.Server.dto.CategoryReqDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,13 @@ public class AdminCategoryAPI {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDTO addCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) {
+    public CategoryDTO addCategory(@RequestBody CategoryReqDTO categoryRequestDTO) {
         return this.iCategoryService.addCategory(categoryRequestDTO);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDTO update(@RequestBody CategoryRequestDTO categoryRequestDTO, @PathVariable Long id) {
+    public CategoryDTO update(@RequestBody CategoryReqDTO categoryRequestDTO, @PathVariable Long id) {
         return this.iCategoryService.update(id, categoryRequestDTO);
     }
 

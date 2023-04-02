@@ -10,8 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,5 +26,5 @@ public class Category extends BaseEntity implements Serializable {
     @Column
     private String parentId;
     @OneToMany(mappedBy = "category")
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products;
 }

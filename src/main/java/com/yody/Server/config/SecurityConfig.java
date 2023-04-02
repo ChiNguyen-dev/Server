@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(jtwEntryPoint)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/**").permitAll()
+                .requestMatchers("/api/v1/admin/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

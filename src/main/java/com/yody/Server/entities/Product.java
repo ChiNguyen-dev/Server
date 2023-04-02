@@ -16,27 +16,28 @@ import java.util.List;
 @Builder
 @Table(name = "products")
 public class Product extends BaseEntity implements Serializable {
-    @Column
+    @Column(length = 150)
     private String name;
-
     @Column
     private BigDecimal price;
-
     @Column(columnDefinition = "Text")
     private String slug;
-
     @Column(columnDefinition = "Text")
-    private String imgUrl;
-
-
+    private String featureImagePath;
+    @Column(length = 15)
+    private String sku;
     @Column(columnDefinition = "Text")
     private String description;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
-
     @OneToMany(mappedBy = "product")
-    private List<ProductVariant> variants;
+    private List<ProductVariant> productVariants;
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> productImages;
 
+    public void addProductVariant(ProductVariant productVariant) {
+        this.productVariants.add(productVariant);
+    }
 }

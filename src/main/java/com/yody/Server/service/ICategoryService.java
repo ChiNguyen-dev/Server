@@ -1,7 +1,7 @@
 package com.yody.Server.service;
 
 import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryRequestDTO;
+import com.yody.Server.dto.CategoryReqDTO;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ public interface ICategoryService {
 
      CategoryDTO getCategoryById(Long id);
 
-     CategoryDTO addCategory(CategoryRequestDTO categoryRequestDTO);
+     CategoryDTO addCategory(CategoryReqDTO categoryRequestDTO);
 
-     CategoryDTO update(Long id, CategoryRequestDTO categoryRequestDTO);
+     CategoryDTO update(Long id, CategoryReqDTO categoryRequestDTO);
 
      boolean delete(Long id);
 }
