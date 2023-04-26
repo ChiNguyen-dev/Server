@@ -23,10 +23,6 @@ public class Product extends BaseEntity implements Serializable {
     @Column(columnDefinition = "Text")
     private String slug;
     @Column(columnDefinition = "Text")
-    private String featureImagePath;
-    @Column(length = 15)
-    private String sku;
-    @Column(columnDefinition = "Text")
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -39,5 +35,9 @@ public class Product extends BaseEntity implements Serializable {
 
     public void addProductVariant(ProductVariant productVariant) {
         this.productVariants.add(productVariant);
+    }
+
+    public void addProductImage(ProductImage productImage) {
+        this.productImages.add(productImage);
     }
 }

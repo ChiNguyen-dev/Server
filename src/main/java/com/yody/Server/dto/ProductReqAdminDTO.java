@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 public class ProductReqAdminDTO extends AbstractDTO<ProductReqAdminDTO> {
     private String name;
     private BigDecimal price;
-    private String featureImagePath;
     private Long categoryId;
-    private String sku;
     private String description;
 }

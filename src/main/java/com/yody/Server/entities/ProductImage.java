@@ -16,10 +16,9 @@ import java.io.Serializable;
 public class ProductImage extends BaseEntity implements Serializable {
 
     @Column(columnDefinition = "Text")
-    private String featureImageName;
+    private String name;
     @Column(columnDefinition = "Text")
-    private String featureImagePath;
-
+    private String src;
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
