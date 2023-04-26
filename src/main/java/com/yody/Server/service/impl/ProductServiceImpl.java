@@ -2,37 +2,50 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
 import com.yody.Server.dto.DataProductReqDTO;
+import com.yody.Server.dto.ImageVariantDTO;
 import com.yody.Server.dto.ProductResAdminDTO;
 import com.yody.Server.dto.ProductVariantDTO;
-import com.yody.Server.entities.*;
+import com.yody.Server.entities.Category;
+import com.yody.Server.entities.Product;
+import com.yody.Server.entities.ProductImage;
+import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.exception.NotFondException;
-import com.yody.Server.repositories.*;
+import com.yody.Server.repositories.CategoryRepository;
+import com.yody.Server.repositories.ProductImageReposiory;
+import com.yody.Server.repositories.ProductRepository;
+import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.IProductService;
-import com.yody.Server.utils.GenerateSlug;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
+@Transactional
 @Slf4j
 public class ProductServiceImpl implements IProductService {
     private final ProductRepository productRepository;
     private final ProductVariantRepository productVariantRepository;
     private final CategoryRepository categoryRepository;
-    private final ColorRepository colorRepository;
-    private final SizeRepository sizeRepository;
+    private final ProductImageReposiory productImageReposiory;
     private final ProductMapper productMapper;
 
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
+    private final ModelMapper modelMapper;
+
+    public List<ProductResAdminDTO> getAllProduct() {
+        return this.productRepository
+                .findAll()
+                .stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                .toList();
     }
 
-    public Product getProductById(Long id) {
-        return this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
+    public ProductResAdminDTO getProductById(Long id) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
+        return this.productMapper.toDto(product);
     }
 
     @Override
@@ -42,32 +55,36 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO) {
-        // Find Category
+        if (dataProductReqDTO.getImages().isEmpty()) throw new NotFondException("Images Not Empty.");
+        if (dataProductReqDTO.getProductVariants().isEmpty()) throw new NotFondException("Option item Not Empty.");
         Category category = this.categoryRepository
-                .findById(dataProductReqDTO.getProductReqAdminDTO().getCategoryId())
-                .orElseThrow(() -> new NotFondException("Category Not isExist in Database"));
-        // Transfer data from req to Entity
-        Product productEntity = this.productMapper.toEntity(dataProductReqDTO.getProductReqAdminDTO());
-        productEntity.setSlug(GenerateSlug.toSlug(productEntity.getName()));
-        productEntity.setCategory(category);
-        productEntity.setProductVariants(new ArrayList<>());
-        // Save product
-        Product product = this.productRepository.save(productEntity);
-        // Loop find and create Entity ProductVariant then add ProductVariant to Product
-        for (ProductVariantDTO productVariantDTO : dataProductReqDTO.getProductVariantReqDTO().getProductVariants()) {
-            Color color = this.colorRepository
-                    .findById(productVariantDTO.getColorId())
-                    .orElseThrow(() -> new NotFondException("Color Not isExist in Database"));
-            Size size = this.sizeRepository
-                    .findById(productVariantDTO.getSizeId())
-                    .orElseThrow(() -> new NotFondException("Size Not isExist in Database"));
-            ProductVariant productVariant = ProductVariant.builder()
-                    .color(color)
-                    .size(size)
+                .findById(dataProductReqDTO.getProduct().getCategoryId())
+                .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
+
+        Product product = this.productRepository
+                .save(this.productMapper.toEntity(dataProductReqDTO.getProduct(), category));
+
+        for (ImageVariantDTO imageVariant : dataProductReqDTO.getImages()) {
+            for (String path : imageVariant.getPaths()) {
+                ProductImage productImage = productImageReposiory.save(ProductImage.builder()
+                        .name(imageVariant.getSku())
+                        .src(path)
+                        .product(product)
+                        .build());
+                product.addProductImage(productImage);
+            }
+        }
+        for (ProductVariantDTO variant : dataProductReqDTO.getProductVariants()) {
+            ProductVariant productVariant = this.productVariantRepository.save(ProductVariant.builder()
+                    .sku(variant.getSku())
+                    .image(product.getProductImages().get(0).getSrc())
+                    .size(variant.getSize())
+                    .color(variant.getColor())
                     .product(product)
-                    .build();
-            product.addProductVariant(this.productVariantRepository.save(productVariant));
+                    .build());
+            product.addProductVariant(productVariant);
         }
         return this.productMapper.toDto(this.productRepository.save(product));
     }
 }
+

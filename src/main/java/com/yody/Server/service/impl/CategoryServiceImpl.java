@@ -27,7 +27,20 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public List<CategoryDTO> getCategories() {
-        return this.categoryRepository.findAll().stream().map(categoryMapper::toDto).collect(Collectors.toList());
+        List<CategoryDTO> categories = this.categoryRepository
+                .findAll()
+                .stream()
+                .map(categoryMapper::toDto)
+                .collect(Collectors.toList());
+        for (CategoryDTO item : categories) {
+            if (item.getParentId() != 0) {
+                for (CategoryDTO child : categories)
+                    if (Long.valueOf(item.getParentId()).equals(child.getId())) item.setParentName(child.getName());
+            } else {
+                item.setParentName("Root");
+            }
+        }
+        return categories;
     }
 
     @Override
@@ -38,12 +51,14 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryDTO addCategory(CategoryReqDTO categoryRequestDTO) {
-        Category categoryEntity = Category.builder()
-                .name(categoryRequestDTO.getName())
-                .parentId(categoryRequestDTO.getParentId())
-                .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
-                .build();
-        return this.categoryMapper.toDto(this.categoryRepository.save(categoryEntity));
+        Category category = this.categoryRepository.save(
+                Category.builder()
+                        .name(categoryRequestDTO.getName())
+                        .parentId(categoryRequestDTO.getParentId())
+                        .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
+                        .build()
+        );
+        return this.categoryMapper.toDto(category);
     }
 
     @Override
@@ -53,11 +68,11 @@ public class CategoryServiceImpl implements ICategoryService {
                 .parentId(categoryRequestDTO.getParentId())
                 .slug(GenerateSlug.toSlug(categoryRequestDTO.getName()))
                 .build();
-        Category updatedCategory = this.categoryRepository.findById(id).map(caterory -> {
-            caterory.setName(categoryEntity.getName());
-            caterory.setSlug(categoryEntity.getSlug());
-            caterory.setParentId(categoryEntity.getParentId());
-            return this.categoryRepository.save(caterory);
+        Category updatedCategory = this.categoryRepository.findById(id).map(category -> {
+            category.setName(categoryEntity.getName());
+            category.setSlug(categoryEntity.getSlug());
+            category.setParentId(categoryEntity.getParentId());
+            return this.categoryRepository.save(category);
         }).orElseThrow(() -> new NotFondException("Category Not Found By Id: " + id));
         return this.categoryMapper.toDto(updatedCategory);
     }

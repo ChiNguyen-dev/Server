@@ -1,5 +1,6 @@
 package com.yody.Server.api.client;
 
+import com.yody.Server.dto.ProductResAdminDTO;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.service.IProductService;
@@ -16,11 +17,11 @@ public class ProductController {
     private final IProductService productService;
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> getAll(){
+    public List<ProductResAdminDTO> getAll(){
         return this.productService.getAllProduct();
     }
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id){
+    public ProductResAdminDTO getProductById(@PathVariable Long id){
         return this.productService.getProductById(id);
     }
 

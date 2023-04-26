@@ -9,9 +9,9 @@ import com.yody.Server.entities.ProductVariant;
 import java.util.List;
 
 public interface IProductService {
-    List<Product> getAllProduct();
+    List<ProductResAdminDTO> getAllProduct();
 
-    Product getProductById(Long id);
+    ProductResAdminDTO getProductById(Long id);
 
     List<ProductVariant> getVariantsByProductId(Long id);
 

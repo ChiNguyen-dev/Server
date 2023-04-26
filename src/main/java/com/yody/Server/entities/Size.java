@@ -2,7 +2,6 @@ package com.yody.Server.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -18,7 +17,4 @@ import java.io.Serializable;
 public class Size extends BaseEntity implements Serializable {
     @Column(length = 50)
     private String name;
-
-    @OneToOne(mappedBy = "size")
-    private ProductVariant productVariant;
 }

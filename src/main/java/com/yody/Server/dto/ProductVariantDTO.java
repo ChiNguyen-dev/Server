@@ -2,8 +2,12 @@ package com.yody.Server.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductVariantDTO {
-    private Long colorId;
-    private Long sizeId;
+    private String color;
+    private String size;
+    private String sku;
+    private List<String> images;
 }
