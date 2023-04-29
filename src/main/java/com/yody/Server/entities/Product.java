@@ -32,7 +32,6 @@ public class Product extends BaseEntity implements Serializable {
     private List<ProductVariant> productVariants;
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
-
     public void addProductVariant(ProductVariant productVariant) {
         this.productVariants.add(productVariant);
     }

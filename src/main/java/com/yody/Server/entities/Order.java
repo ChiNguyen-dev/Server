@@ -1,12 +1,10 @@
 package com.yody.Server.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +14,11 @@ import java.io.Serializable;
 @Builder
 @Table(name = "orders")
 public class Order extends BaseEntity implements Serializable {
+    private String address;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    @OneToMany(cascade =  CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
+    private List<OrderItem> orderItems;
 }
