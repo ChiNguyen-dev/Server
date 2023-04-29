@@ -46,6 +46,9 @@ public class OrderServiceImpl implements IOrderService {
                 .address(orderDTO.getAddress())
                 .user(user)
                 .build();
+        for (OrderItem line: lines) {
+            line.setOrder(order);
+        }
         orderRepository.save(order);
         PlaceOrderResponse response = orderMapper.toDto(order);
         return response;
