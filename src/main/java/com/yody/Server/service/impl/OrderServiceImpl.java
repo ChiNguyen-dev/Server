@@ -31,7 +31,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public PlaceOrderResponse placeOrder(PlaceOrderRequest orderDTO) {
         List<OrderItem> lines = new ArrayList<>();
-        List<LineItemResponse> lineItemResponses = new ArrayList<>();
         orderDTO.getLineItems().forEach(line -> {
             ProductVariant variant = variantRepository.findById(line.getVariantId())
                     .orElseThrow(() -> new NotFondException("variant do not exist in database"));
@@ -40,11 +39,6 @@ public class OrderServiceImpl implements IOrderService {
                     .quantity(line.getQuantity())
                     .build();
             lines.add(item);
-            LineItemResponse lineItemResponse = LineItemResponse.builder()
-                    .variant(variant)
-                    .quantity(line.getQuantity())
-                    .build();
-            lineItemResponses.add(lineItemResponse);
         });
         User user = userRepository.findById(orderDTO.getUserId()).orElse(null);
         Order order = Order.builder()
@@ -54,8 +48,6 @@ public class OrderServiceImpl implements IOrderService {
                 .build();
         orderRepository.save(order);
         PlaceOrderResponse response = orderMapper.toDto(order);
-        response.setLineItems(lineItemResponses);
-        response.setAddress(order.getAddress());
         return response;
     }
 }
