@@ -29,6 +29,17 @@ public class ProductController {
     public List<ProductVariant> getProductVariantByProductId(@PathVariable Long id){
         return this.productService.getVariantsByProductId(id);
     }
-
+    @GetMapping("/{cateId}")
+    public List<Product> getProductByCategoryId(@PathVariable Long cateId){
+        return this.productService.getProductByCategoryId(cateId);
+    }
+    @GetMapping("/search")
+    public List<Product> getProductByFilter(@RequestParam(required = false) Long cateId,
+                                            @RequestParam(required = false) String size,
+                                            @RequestParam(required = false) String color,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "default") String sortType){
+        return this.productService.getProductByFilter(cateId,size,color,page, sortType);
+    }
 
 }

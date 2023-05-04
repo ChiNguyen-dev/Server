@@ -16,4 +16,8 @@ public interface IProductService {
     List<ProductVariant> getVariantsByProductId(Long id);
 
     ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO);
+
+    List<Product> getProductByCategoryId(Long cateId);
+
+    List<Product> getProductByFilter(Long cateId, String size, String color, int page, String sortType);
 }

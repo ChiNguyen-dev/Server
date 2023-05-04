@@ -10,17 +10,19 @@ import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.exception.NotFondException;
-import com.yody.Server.repositories.CategoryRepository;
-import com.yody.Server.repositories.ProductImageReposiory;
-import com.yody.Server.repositories.ProductRepository;
-import com.yody.Server.repositories.ProductVariantRepository;
+import com.yody.Server.repositories.*;
 import com.yody.Server.service.IProductService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,7 +37,6 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
 
     private final ModelMapper modelMapper;
-
     public List<ProductResAdminDTO> getAllProduct() {
         return this.productRepository
                 .findAll()
@@ -85,6 +86,31 @@ public class ProductServiceImpl implements IProductService {
             product.addProductVariant(productVariant);
         }
         return this.productMapper.toDto(this.productRepository.save(product));
+    }
+
+    @Override
+    public List<Product> getProductByCategoryId(Long cateId) {
+        return this.productRepository.findByCategoryId(cateId);
+    }
+
+    @Override
+    public List<Product> getProductByFilter(Long cateId, String size, String color, int page, String sortType) {
+        Pageable pageable = null;
+        switch (sortType.toUpperCase()) {
+            case "NAME_ASC": {
+                pageable = PageRequest.of(page, 20, Sort.by("name").ascending());
+                break;
+            }
+            case "NAME_DESC":{
+                pageable = PageRequest.of(page, 20, Sort.by("name").descending());
+                break;
+            }
+            default: {
+                pageable = PageRequest.of(page, 20);
+                break;
+            }
+        }
+        return this.productRepository.findByVariantSizeAndColor(cateId,size,color,pageable);
     }
 }
 
