@@ -1,8 +1,10 @@
 package com.yody.Server.repositories;
 
 import com.yody.Server.entities.Product;
+import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,12 +15,16 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long cateId);
+    Page<Product> findAll(Pageable pageable);
 
-    @Query("select  p from Product p join p.productVariants pv where " +
-            "(:size is null or pv.size = :size) and " +
-            "(:color is null or pv.color = :color) and " +
-            "(:category is null or p.category.id = :category)"
+    @Query("SELECT DISTINCT p FROM Product p JOIN p.productVariants pv " +
+            "WHERE (p.category.id IN :cateIds) " +
+            " AND (pv.size IN :sizes )" +
+            " AND (pv.color IN :colors )")
+    List<Product> findByFilter(@Param("cateIds")@Nullable List<Long> cateIds,
+                                            @Param("sizes") @Nullable List<String> sizes,
+                                            @Param("colors") @Nullable List<String> colors,
+                                            Pageable pageable);
+    List<Product> findAll(Specification specification, Pageable pageable);
 
-    )
-    List<Product> findByVariantSizeAndColor(@Param("category") Long category, @Param("size") String size, @Param("color") String color, Pageable pageable);
 }

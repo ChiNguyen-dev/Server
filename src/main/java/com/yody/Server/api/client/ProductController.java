@@ -34,12 +34,12 @@ public class ProductController {
         return this.productService.getProductByCategoryId(cateId);
     }
     @GetMapping("/search")
-    public List<Product> getProductByFilter(@RequestParam(required = false) Long cateId,
-                                            @RequestParam(required = false) String size,
-                                            @RequestParam(required = false) String color,
+    public List<Product> getProductByFilter(@RequestParam(required = false) List<Long> cateId,
+                                            @RequestParam(required = false) List<String> sizes,
+                                            @RequestParam(required = false) List<String> colors,
                                             @RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "default") String sortType){
-        return this.productService.getProductByFilter(cateId,size,color,page, sortType);
+        return this.productService.getProductByFilter(cateId,sizes,colors,page, sortType);
     }
 
 }

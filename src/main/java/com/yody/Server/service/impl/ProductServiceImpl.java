@@ -1,10 +1,7 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
-import com.yody.Server.dto.DataProductReqDTO;
-import com.yody.Server.dto.ImageVariantDTO;
-import com.yody.Server.dto.ProductResAdminDTO;
-import com.yody.Server.dto.ProductVariantDTO;
+import com.yody.Server.dto.*;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;
@@ -12,14 +9,16 @@ import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.*;
 import com.yody.Server.service.IProductService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
 
     private final ModelMapper modelMapper;
+    private final EntityManager em;
     public List<ProductResAdminDTO> getAllProduct() {
         return this.productRepository
                 .findAll()
@@ -94,7 +94,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByFilter(Long cateId, String size, String color, int page, String sortType) {
+    public List<Product> getProductByFilter(List<Long> cateIds,
+                                            List<String> colors,
+                                            List<String> sizes,
+                                            int page,
+                                            String sortType) {
         Pageable pageable = null;
         switch (sortType.toUpperCase()) {
             case "NAME_ASC": {
@@ -110,7 +114,8 @@ public class ProductServiceImpl implements IProductService {
                 break;
             }
         }
-        return this.productRepository.findByVariantSizeAndColor(cateId,size,color,pageable);
+        Specification<Product> specification = SearchSpecification.getSpecification(cateIds,colors,sizes);
+        return this.productRepository.findAll(specification, pageable);
     }
 }
 

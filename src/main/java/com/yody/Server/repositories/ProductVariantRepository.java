@@ -1,5 +1,6 @@
 package com.yody.Server.repositories;
 
+import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
 

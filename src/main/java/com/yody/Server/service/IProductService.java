@@ -1,7 +1,6 @@
 package com.yody.Server.service;
 
 import com.yody.Server.dto.DataProductReqDTO;
-import com.yody.Server.dto.ProductReqAdminDTO;
 import com.yody.Server.dto.ProductResAdminDTO;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductVariant;
@@ -19,5 +18,9 @@ public interface IProductService {
 
     List<Product> getProductByCategoryId(Long cateId);
 
-    List<Product> getProductByFilter(Long cateId, String size, String color, int page, String sortType);
+    List<Product> getProductByFilter(List<Long> cateIds,
+                                     List<String> colors,
+                                     List<String> sizes,
+                                     int page,
+                                     String sortType);
 }
