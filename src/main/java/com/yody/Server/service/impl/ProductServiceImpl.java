@@ -1,16 +1,21 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
-import com.yody.Server.dto.*;
+import com.yody.Server.dto.DataProductReqDTO;
+import com.yody.Server.dto.ImageVariantDTO;
+import com.yody.Server.dto.ProductResAdminDTO;
+import com.yody.Server.dto.ProductVariantDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.exception.NotFondException;
-import com.yody.Server.repositories.*;
+import com.yody.Server.repositories.CategoryRepository;
+import com.yody.Server.repositories.ProductImageReposiory;
+import com.yody.Server.repositories.ProductRepository;
+import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.IProductService;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +26,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +43,7 @@ public class ProductServiceImpl implements IProductService {
 
     private final ModelMapper modelMapper;
     private final EntityManager em;
+
     public List<ProductResAdminDTO> getAllProduct() {
         return this.productRepository
                 .findAll()
@@ -56,6 +63,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO) {
+        Map<String, String> imageOfVariant = new HashMap<>();
         if (dataProductReqDTO.getImages().isEmpty()) throw new NotFondException("Images Not Empty.");
         if (dataProductReqDTO.getProductVariants().isEmpty()) throw new NotFondException("Option item Not Empty.");
         Category category = this.categoryRepository
@@ -72,13 +80,15 @@ public class ProductServiceImpl implements IProductService {
                         .src(path)
                         .product(product)
                         .build());
+                if (!imageOfVariant.containsKey(imageVariant.getSku()))
+                    imageOfVariant.put(imageVariant.getSku(), productImage.getSrc());
                 product.addProductImage(productImage);
             }
         }
         for (ProductVariantDTO variant : dataProductReqDTO.getProductVariants()) {
             ProductVariant productVariant = this.productVariantRepository.save(ProductVariant.builder()
                     .sku(variant.getSku())
-                    .image(product.getProductImages().get(0).getSrc())
+                    .image(imageOfVariant.get(variant.getSku()))
                     .size(variant.getSize())
                     .color(variant.getColor())
                     .product(product)
@@ -89,8 +99,22 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByCategoryId(Long cateId) {
-        return this.productRepository.findByCategoryId(cateId);
+    public List<ProductResAdminDTO> getProductByCategorySlug(String slug) {
+        Category category = this.categoryRepository
+                .findBySlug(slug)
+                .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
+        return this.productRepository.findByCategoryId(category.getId())
+                .stream()
+                .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<ProductResAdminDTO> getProductByCategoryId(Long cateId) {
+        return this.productRepository.findByCategoryId(cateId)
+                .stream()
+                .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                .toList();
     }
 
     @Override
@@ -105,7 +129,7 @@ public class ProductServiceImpl implements IProductService {
                 pageable = PageRequest.of(page, 20, Sort.by("name").ascending());
                 break;
             }
-            case "NAME_DESC":{
+            case "NAME_DESC": {
                 pageable = PageRequest.of(page, 20, Sort.by("name").descending());
                 break;
             }
@@ -114,7 +138,7 @@ public class ProductServiceImpl implements IProductService {
                 break;
             }
         }
-        Specification<Product> specification = SearchSpecification.getSpecification(cateIds,colors,sizes);
+        Specification<Product> specification = SearchSpecification.getSpecification(cateIds, colors, sizes);
         return this.productRepository.findAll(specification, pageable);
     }
 }

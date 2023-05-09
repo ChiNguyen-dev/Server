@@ -2,7 +2,6 @@ package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.DataProductReqDTO;
 import com.yody.Server.dto.ProductResAdminDTO;
-import com.yody.Server.entities.Product;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +31,6 @@ public class AdminProductAPI {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResAdminDTO addProduct(@RequestBody DataProductReqDTO dataProductReqDTO) {
-        log.info(dataProductReqDTO.getProduct().toString());
-        log.info(dataProductReqDTO.getProductVariants().toString());
-        log.info(dataProductReqDTO.getImages().toString());
         return this.productService.addProduct(dataProductReqDTO);
     }
 }

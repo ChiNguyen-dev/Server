@@ -12,11 +12,13 @@ public interface IProductService {
 
     ProductResAdminDTO getProductById(Long id);
 
-    List<ProductVariant> getVariantsByProductId(Long id);
-
     ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO);
 
-    List<Product> getProductByCategoryId(Long cateId);
+    List<ProductResAdminDTO> getProductByCategorySlug(String slug);
+
+    List<ProductVariant> getVariantsByProductId(Long id);
+
+    List<ProductResAdminDTO> getProductByCategoryId(Long cateId);
 
     List<Product> getProductByFilter(List<Long> cateIds,
                                      List<String> colors,

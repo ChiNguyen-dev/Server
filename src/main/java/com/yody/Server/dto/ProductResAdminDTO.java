@@ -1,6 +1,5 @@
 package com.yody.Server.dto;
 
-import com.yody.Server.entities.ProductImage;
 import com.yody.Server.entities.ProductVariant;
 import lombok.Data;
 
