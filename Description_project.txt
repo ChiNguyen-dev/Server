@@ -1,0 +1,35 @@
+Tên đồ án: Website Fashion (Clone : https://yody.vn ).
+Thành viên thực hiện: + 19130154 Võ Chí Nguyên
+			    + 19130164 Nguyễn Hồng Phú Nhuận
+
+- Công nghệ thực hiện: 
+	
+	1) Front-end: Angular.
+
+	2) Back-end: Spring framework (Spring boot).
+
+	3) Database: MySQL Server hoặc MariaDb.
+
+- Lý do chọn đề tài: tham khảo từ 1 website( https://yody.vn). Giao diện đẹp, đa dạng các sản phẩm từ quần áo trẻ nhỏ đến người lớn, đa dạng các chức năng.
+
+- Chức năng sẻ thực hiện: 
+
+	1) Admin: 
+		
+		+ Authentication.
+		
+		+ Authorization.
+
+		+ Crud các sản phẩm, danh mục, đơn hàng, doanh thu, người dùng, vai trò.
+
+	2) Client:
+	 	
+		+ Đăng nhập, đăng xuất.
+		
+		+ Giỏ hàng. Tìm, lọc, mua hàng sản phẩm ...
+
+
+
+
+
+	
