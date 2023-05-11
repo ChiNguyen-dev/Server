@@ -2,8 +2,8 @@ package com.yody.Server.service;
 
 import com.yody.Server.dto.AuthenticationRequest;
 import com.yody.Server.dto.AuthenticationResponse;
-import com.yody.Server.dto.UserDTO;
-import com.yody.Server.dto.UserRegisterRequest;
+import com.yody.Server.dto.user.UserDTO;
+import com.yody.Server.dto.user.UserRegisterRequest;
 
 import java.util.List;
 

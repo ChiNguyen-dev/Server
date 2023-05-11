@@ -1,6 +1,7 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.cart.CartRequestDTO;
+import com.yody.Server.dto.cart.CartResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1/shopping")
-public class ShoppingController {
+@RequestMapping("/api/v1/carts")
+public class CartController {
     @PostMapping
-    public ResponseEntity<ShoppingResDTO> store(@RequestBody CartRequestDTO request) {
+    public ResponseEntity<String> store(@RequestBody CartRequestDTO request) {
         log.info(request.toString());
-        return null;
+        return ResponseEntity.ok("oke bạn oơi");
     }
 }

@@ -1,6 +1,6 @@
 package com.yody.Server.api.admin;
 
-import com.yody.Server.dto.UserDTO;
+import com.yody.Server.dto.user.UserDTO;
 import com.yody.Server.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
