@@ -9,5 +9,5 @@ import java.util.Set;
 public class UserDTO extends AbstractDTO<UserDTO> {
     private String fullName;
     private String email;
-    private Set<RoleDTO> roleDTOS = new HashSet<>();
+    private Set<RoleDTO> role = new HashSet<>();
 }
