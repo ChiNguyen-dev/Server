@@ -86,4 +86,16 @@ public class CategoryServiceImpl implements ICategoryService {
         }
         return false;
     }
+
+    @Override
+    public List<CategoryDTO> getSubCategoryBySlug(String slug) {
+        Category category = this.categoryRepository.findBySlug(slug).orElseThrow(() -> new NotFondException("not found"));
+        List<CategoryDTO> categories = this.categoryRepository
+                .findByParentId(category.getParentId())
+                .stream()
+                .map(categoryMapper::toDto)
+                .collect(Collectors.toList());
+
+        return categories;
+    }
 }

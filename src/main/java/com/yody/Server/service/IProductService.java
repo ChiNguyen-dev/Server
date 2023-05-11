@@ -20,7 +20,7 @@ public interface IProductService {
 
     List<ProductResAdminDTO> getProductByCategoryId(Long cateId);
 
-    List<Product> getProductByFilter(List<Long> cateIds,
+    List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
                                      List<String> colors,
                                      List<String> sizes,
                                      int page,

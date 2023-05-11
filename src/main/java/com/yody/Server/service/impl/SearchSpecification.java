@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 public class SearchSpecification<T> {
-    public static Specification<Product> getSpecification(List<Long> cateIds,
+    public static Specification<Product> getSpecification(List<String> slugs ,
                                                           List<String> sizes,
                                                           List<String> colors){
         return (root, query, criteriaBuilder) ->{
            List<Predicate> predicates = new ArrayList<>();
-           if (cateIds != null && !cateIds.isEmpty()){
-               Predicate catePredicate = root.get("category").get("id").in(cateIds);
+
+           if (slugs != null && !slugs.isEmpty()){
+               Join<Product, ProductVariant> join = root.join("category");
+               Predicate catePredicate = join.get("slug").in(slugs);
                predicates.add(catePredicate);
            }
            if( colors != null &&  !colors.isEmpty()){
@@ -25,7 +27,7 @@ public class SearchSpecification<T> {
                Predicate colorPredicate = join.get("color").in(colors);
                predicates.add(colorPredicate);
            }
-           if(sizes != null && sizes.isEmpty()){
+           if(sizes != null && !sizes.isEmpty()){
                Join<Product, ProductVariant> join = root.join("productVariants");
                Predicate sizePredicate = join.get("size").in(sizes);
                predicates.add(sizePredicate);

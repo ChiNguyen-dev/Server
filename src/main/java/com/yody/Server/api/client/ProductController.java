@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("api/v1/product")
+@RequestMapping("api/v1/products")
 public class ProductController {
     private final IProductService productService;
 
@@ -45,12 +45,12 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> getProductByFilter(@RequestParam(required = false) List<Long> cateId,
+    public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<String> slugs,
                                             @RequestParam(required = false) List<String> sizes,
                                             @RequestParam(required = false) List<String> colors,
                                             @RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "default") String sortType) {
-        return this.productService.getProductByFilter(cateId, sizes, colors, page, sortType);
+        return this.productService.getProductByFilter(slugs, sizes, colors, page, sortType);
     }
 
 }
