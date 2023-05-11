@@ -16,4 +16,6 @@ public interface ICategoryService {
      CategoryDTO update(Long id, CategoryReqDTO categoryRequestDTO);
 
      boolean delete(Long id);
+
+     List<CategoryDTO> getSubCategoryBySlug(String slug);
 }

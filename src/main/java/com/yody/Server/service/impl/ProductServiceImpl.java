@@ -118,19 +118,27 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByFilter(List<Long> cateIds,
+    public List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
                                             List<String> colors,
                                             List<String> sizes,
                                             int page,
                                             String sortType) {
         Pageable pageable = null;
         switch (sortType.toUpperCase()) {
-            case "NAME_ASC": {
+            case "TỪ A - Z": {
                 pageable = PageRequest.of(page, 20, Sort.by("name").ascending());
                 break;
             }
-            case "NAME_DESC": {
+            case "TỪ Z - A": {
                 pageable = PageRequest.of(page, 20, Sort.by("name").descending());
+                break;
+            }
+            case "GIÁ GIẢM DẦN": {
+                pageable = PageRequest.of(page, 20, Sort.by("price").descending());
+                break;
+            }
+            case "GIÁ TĂNG DẦN": {
+                pageable = PageRequest.of(page, 20, Sort.by("price").ascending());
                 break;
             }
             default: {
@@ -138,8 +146,9 @@ public class ProductServiceImpl implements IProductService {
                 break;
             }
         }
-        Specification<Product> specification = SearchSpecification.getSpecification(cateIds, colors, sizes);
-        return this.productRepository.findAll(specification, pageable);
+        Specification<Product> specification = SearchSpecification.getSpecification(slugs, colors, sizes);
+        return this.productRepository.findAll(specification, pageable).stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                .toList();
     }
 }
 
