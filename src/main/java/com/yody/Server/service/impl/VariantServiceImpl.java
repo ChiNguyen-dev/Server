@@ -1,7 +1,10 @@
 package com.yody.Server.service.impl;
 
+import com.yody.Server.components.ProductMapper;
 import com.yody.Server.components.VariantMapper;
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.dto.variant.VariantResDTO;
+import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.ProductVariantRepository;
@@ -17,12 +20,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class VariantServiceImpl implements IVariantService {
     private final ProductVariantRepository variantRepository;
+    private final ProductMapper productMapper;
     private final VariantMapper variantMapper;
 
     @Override
-    public VariantResDTO findById(Long id) {
+    public ProductResAdminDTO findById(Long id) {
         ProductVariant productVariant = this.variantRepository.findById(id)
                 .orElseThrow(() -> new NotFondException("Variant not isExist in Database"));
-        return this.variantMapper.toVariantResDTO(productVariant);
+        return this.productMapper.toDto(productVariant.getProduct());
     }
 }

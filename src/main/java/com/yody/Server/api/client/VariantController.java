@@ -1,5 +1,6 @@
 package com.yody.Server.api.client;
 
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.service.IVariantService;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ public class VariantController {
     private final IVariantService variantService;
 
     @GetMapping("/{id}")
-    public VariantResDTO getVariant(@PathVariable Long id) {
+    public ProductResAdminDTO getVariant(@PathVariable Long id) {
         return this.variantService.findById(id);
     }
 }
