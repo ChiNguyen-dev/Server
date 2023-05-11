@@ -1,7 +1,6 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.cart.CartRequestDTO;
-import com.yody.Server.dto.cart.CartResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
