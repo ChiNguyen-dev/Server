@@ -20,9 +20,9 @@ public class CartItem extends BaseEntity implements Serializable {
     @Column
     private Long quantity;
     @ManyToOne
-    @JoinColumn(name = "cartItem_id")
+    @JoinColumn(name = "cart_id")
     private Cart cart;
-    @ManyToOne
-    @JoinColumn(name = "productVariant_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "variant_id")
     private ProductVariant productVariant;
 }
