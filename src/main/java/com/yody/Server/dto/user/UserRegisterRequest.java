@@ -11,9 +11,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserRegisterRequest extends AbstractDTO<UserRegisterRequest>{
+public class UserRegisterRequest{
     private String fullName;
     private String email;
     private String password;
-    private Set<RoleDTO> roles = new HashSet<>();
 }
