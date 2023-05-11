@@ -1,7 +1,7 @@
 package com.yody.Server.service;
 
-import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryReqDTO;
 
 import java.util.List;
 

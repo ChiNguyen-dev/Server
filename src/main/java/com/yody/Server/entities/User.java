@@ -26,12 +26,14 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER  , cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -46,9 +48,10 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return this.password;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -68,7 +71,8 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    public void addRole(Role role){
+
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 }

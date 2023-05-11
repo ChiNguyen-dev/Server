@@ -1,7 +1,6 @@
 package com.yody.Server.api.client;
 
-import com.yody.Server.dto.ProductResAdminDTO;
-import com.yody.Server.entities.Product;
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;

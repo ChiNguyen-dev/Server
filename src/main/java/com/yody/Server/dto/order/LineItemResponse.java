@@ -1,7 +1,6 @@
 package com.yody.Server.dto.order;
 
 import com.yody.Server.dto.AbstractDTO;
-import com.yody.Server.dto.ProductVariantDTO;
 import com.yody.Server.entities.ProductVariant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

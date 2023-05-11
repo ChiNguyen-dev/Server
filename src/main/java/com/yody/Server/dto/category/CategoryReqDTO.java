@@ -1,5 +1,7 @@
-package com.yody.Server.dto;
+package com.yody.Server.dto.category;
 
+import com.yody.Server.dto.AbstractDTO;
+import com.yody.Server.dto.category.CategoryDTO;
 import lombok.Data;
 
 @Data

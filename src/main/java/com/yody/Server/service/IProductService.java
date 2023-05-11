@@ -1,8 +1,7 @@
 package com.yody.Server.service;
 
-import com.yody.Server.dto.DataProductReqDTO;
-import com.yody.Server.dto.ProductResAdminDTO;
-import com.yody.Server.entities.Product;
+import com.yody.Server.dto.product.DataProductReqDTO;
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.entities.ProductVariant;
 
 import java.util.List;

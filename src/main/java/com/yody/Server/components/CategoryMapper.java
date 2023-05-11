@@ -1,7 +1,7 @@
 package com.yody.Server.components;
 
-import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryReqDTO;
 import com.yody.Server.entities.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

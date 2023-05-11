@@ -1,7 +1,7 @@
 package com.yody.Server.api.admin;
 
-import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryReqDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

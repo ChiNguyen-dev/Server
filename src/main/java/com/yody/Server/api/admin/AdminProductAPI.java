@@ -1,7 +1,7 @@
 package com.yody.Server.api.admin;
 
-import com.yody.Server.dto.DataProductReqDTO;
-import com.yody.Server.dto.ProductResAdminDTO;
+import com.yody.Server.dto.product.DataProductReqDTO;
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

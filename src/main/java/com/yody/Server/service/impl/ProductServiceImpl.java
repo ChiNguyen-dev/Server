@@ -1,10 +1,10 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
-import com.yody.Server.dto.DataProductReqDTO;
-import com.yody.Server.dto.ImageVariantDTO;
-import com.yody.Server.dto.ProductResAdminDTO;
-import com.yody.Server.dto.ProductVariantDTO;
+import com.yody.Server.dto.product.DataProductReqDTO;
+import com.yody.Server.dto.image.ImageVariantDTO;
+import com.yody.Server.dto.product.ProductResAdminDTO;
+import com.yody.Server.dto.variant.ProductVariantDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;

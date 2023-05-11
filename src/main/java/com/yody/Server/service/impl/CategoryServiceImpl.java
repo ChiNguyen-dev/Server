@@ -2,8 +2,8 @@ package com.yody.Server.service.impl;
 
 
 import com.yody.Server.components.CategoryMapper;
-import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryReqDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;

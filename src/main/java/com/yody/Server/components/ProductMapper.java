@@ -1,9 +1,9 @@
 package com.yody.Server.components;
 
-import com.yody.Server.dto.CategoryDTO;
-import com.yody.Server.dto.ImageDTO;
-import com.yody.Server.dto.ProductReqAdminDTO;
-import com.yody.Server.dto.ProductResAdminDTO;
+import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.image.ImageDTO;
+import com.yody.Server.dto.product.ProductReqAdminDTO;
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.utils.GenerateSlug;

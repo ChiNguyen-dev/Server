@@ -1,4 +1,4 @@
-package com.yody.Server.dto;
+package com.yody.Server.dto.variant;
 
 import lombok.Data;
 

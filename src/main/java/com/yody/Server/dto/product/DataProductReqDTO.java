@@ -1,5 +1,8 @@
-package com.yody.Server.dto;
+package com.yody.Server.dto.product;
 
+import com.yody.Server.dto.AbstractDTO;
+import com.yody.Server.dto.image.ImageVariantDTO;
+import com.yody.Server.dto.variant.ProductVariantDTO;
 import lombok.Data;
 
 import java.util.List;

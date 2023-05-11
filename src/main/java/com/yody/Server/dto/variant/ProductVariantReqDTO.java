@@ -1,5 +1,6 @@
-package com.yody.Server.dto;
+package com.yody.Server.dto.variant;
 
+import com.yody.Server.dto.AbstractDTO;
 import lombok.Data;
 
 import java.util.List;
