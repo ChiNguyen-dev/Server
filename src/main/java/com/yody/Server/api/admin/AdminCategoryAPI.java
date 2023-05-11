@@ -1,7 +1,7 @@
 package com.yody.Server.api.admin;
 
-import com.yody.Server.dto.category.CategoryDTO;
-import com.yody.Server.dto.category.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryAdminResDTO;
+import com.yody.Server.dto.category.CategoryAdminReqDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,25 +19,25 @@ public class AdminCategoryAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CategoryDTO> getCategories() {
+    public List<CategoryAdminResDTO> getCategories() {
         return this.iCategoryService.getCategories();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDTO getCategoryById(@PathVariable Long id) {
+    public CategoryAdminResDTO getCategoryById(@PathVariable Long id) {
         return this.iCategoryService.getCategoryById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDTO addCategory(@RequestBody CategoryReqDTO categoryRequestDTO) {
+    public CategoryAdminResDTO addCategory(@RequestBody CategoryAdminReqDTO categoryRequestDTO) {
         return this.iCategoryService.addCategory(categoryRequestDTO);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDTO update(@RequestBody CategoryReqDTO categoryRequestDTO, @PathVariable Long id) {
+    public CategoryAdminResDTO update(@RequestBody CategoryAdminReqDTO categoryRequestDTO, @PathVariable Long id) {
         return this.iCategoryService.update(id, categoryRequestDTO);
     }
 

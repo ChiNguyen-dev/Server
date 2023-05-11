@@ -1,8 +1,8 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
-import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.image.ImageVariantDTO;
+import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.dto.variant.ProductVariantDTO;
 import com.yody.Server.entities.Category;
@@ -15,7 +15,6 @@ import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.IProductService;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +39,7 @@ public class ProductServiceImpl implements IProductService {
     private final CategoryRepository categoryRepository;
     private final ProductImageReposiory productImageReposiory;
     private final ProductMapper productMapper;
-
     private final ModelMapper modelMapper;
-    private final EntityManager em;
 
     public List<ProductResAdminDTO> getAllProduct() {
         return this.productRepository
@@ -103,7 +100,8 @@ public class ProductServiceImpl implements IProductService {
         Category category = this.categoryRepository
                 .findBySlug(slug)
                 .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
-        return this.productRepository.findByCategoryId(category.getId())
+        Pageable pageable = PageRequest.of(0, 8);
+        return this.productRepository.findByCategoryId(pageable, category.getId())
                 .stream()
                 .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
@@ -119,10 +117,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
-                                            List<String> colors,
-                                            List<String> sizes,
-                                            int page,
-                                            String sortType) {
+                                                       List<String> colors,
+                                                       List<String> sizes,
+                                                       int page,
+                                                       String sortType) {
         Pageable pageable = null;
         switch (sortType.toUpperCase()) {
             case "TỪ A - Z": {

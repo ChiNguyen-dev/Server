@@ -1,6 +1,6 @@
 package com.yody.Server.api.client;
 
-import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryAdminResDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CategoryController {
     private final ICategoryService categoryService;
     @GetMapping("/{slug}")
-    public List<CategoryDTO> getSubCategoryBySlug(@PathVariable String slug){
+    public List<CategoryAdminResDTO> getSubCategoryBySlug(@PathVariable String slug){
         return this.categoryService.getSubCategoryBySlug(slug);
     }
 }

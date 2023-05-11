@@ -2,8 +2,8 @@ package com.yody.Server.service.impl;
 
 
 import com.yody.Server.components.CategoryMapper;
-import com.yody.Server.dto.category.CategoryDTO;
-import com.yody.Server.dto.category.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryAdminResDTO;
+import com.yody.Server.dto.category.CategoryAdminReqDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
@@ -26,15 +26,15 @@ public class CategoryServiceImpl implements ICategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryDTO> getCategories() {
-        List<CategoryDTO> categories = this.categoryRepository
+    public List<CategoryAdminResDTO> getCategories() {
+        List<CategoryAdminResDTO> categories = this.categoryRepository
                 .findAll()
                 .stream()
                 .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
-        for (CategoryDTO item : categories) {
+        for (CategoryAdminResDTO item : categories) {
             if (item.getParentId() != 0) {
-                for (CategoryDTO child : categories)
+                for (CategoryAdminResDTO child : categories)
                     if (Long.valueOf(item.getParentId()).equals(child.getId())) item.setParentName(child.getName());
             } else {
                 item.setParentName("Root");
@@ -44,13 +44,13 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO getCategoryById(Long id) {
+    public CategoryAdminResDTO getCategoryById(Long id) {
         Category category = this.categoryRepository.findById(id).orElseThrow(() -> new NotFondException("Category Not Found By Id: " + id));
         return this.categoryMapper.toDto(category);
     }
 
     @Override
-    public CategoryDTO addCategory(CategoryReqDTO categoryRequestDTO) {
+    public CategoryAdminResDTO addCategory(CategoryAdminReqDTO categoryRequestDTO) {
         Category category = this.categoryRepository.save(
                 Category.builder()
                         .name(categoryRequestDTO.getName())
@@ -62,7 +62,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO update(Long id, CategoryReqDTO categoryRequestDTO) {
+    public CategoryAdminResDTO update(Long id, CategoryAdminReqDTO categoryRequestDTO) {
         Category categoryEntity = Category.builder()
                 .name(categoryRequestDTO.getName())
                 .parentId(categoryRequestDTO.getParentId())
@@ -88,9 +88,9 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<CategoryDTO> getSubCategoryBySlug(String slug) {
+    public List<CategoryAdminResDTO> getSubCategoryBySlug(String slug) {
         Category category = this.categoryRepository.findBySlug(slug).orElseThrow(() -> new NotFondException("not found"));
-        List<CategoryDTO> categories = this.categoryRepository
+        List<CategoryAdminResDTO> categories = this.categoryRepository
                 .findByParentId(category.getParentId())
                 .stream()
                 .map(categoryMapper::toDto)

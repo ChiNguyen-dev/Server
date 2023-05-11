@@ -15,16 +15,20 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long cateId);
+
+    Page<Product> findByCategoryId(Pageable pageable, Long cateId);
+
     Page<Product> findAll(Pageable pageable);
 
     @Query("SELECT DISTINCT p FROM Product p JOIN p.productVariants pv " +
             "WHERE (p.category.id IN :cateIds) " +
             " AND (pv.size IN :sizes )" +
             " AND (pv.color IN :colors )")
-    List<Product> findByFilter(@Param("cateIds")@Nullable List<Long> cateIds,
-                                            @Param("sizes") @Nullable List<String> sizes,
-                                            @Param("colors") @Nullable List<String> colors,
-                                            Pageable pageable);
+    List<Product> findByFilter(@Param("cateIds") @Nullable List<Long> cateIds,
+                               @Param("sizes") @Nullable List<String> sizes,
+                               @Param("colors") @Nullable List<String> colors,
+                               Pageable pageable);
+
     List<Product> findAll(Specification specification, Pageable pageable);
 
 }

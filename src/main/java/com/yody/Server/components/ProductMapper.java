@@ -1,9 +1,11 @@
 package com.yody.Server.components;
 
-import com.yody.Server.dto.category.CategoryDTO;
+import com.yody.Server.dto.category.CategoryAdminResDTO;
+import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.dto.image.ImageDTO;
 import com.yody.Server.dto.product.ProductReqAdminDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
+import com.yody.Server.dto.variant.ProductVariantResDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.utils.GenerateSlug;
@@ -29,14 +31,18 @@ public class ProductMapper {
     }
 
     public ProductResAdminDTO toDto(Product product) {
-        CategoryDTO categoryDTO = this.modelMapper.map(product.getCategory(), CategoryDTO.class);
+        CategoryResDTO categoryDTO = this.modelMapper.map(product.getCategory(), CategoryResDTO.class);
         List<ImageDTO> imageDTOS = product.getProductImages()
                 .stream().map(ProductImage -> modelMapper.map(ProductImage, ImageDTO.class))
+                .toList();
+        List<ProductVariantResDTO> variantDTOS = product.getProductVariants()
+                .stream()
+                .map(ProductVariant -> this.modelMapper.map(ProductVariant, ProductVariantResDTO.class))
                 .toList();
         ProductResAdminDTO productResAdminDTO = this.modelMapper.map(product, ProductResAdminDTO.class);
         productResAdminDTO.setImages(imageDTOS);
         productResAdminDTO.setCategory(categoryDTO);
-        productResAdminDTO.setVariants(product.getProductVariants());
+        productResAdminDTO.setVariants(variantDTOS);
         return productResAdminDTO;
     }
 }

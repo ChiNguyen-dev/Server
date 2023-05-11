@@ -1,11 +1,11 @@
 package com.yody.Server.dto.category;
 
 import com.yody.Server.dto.AbstractDTO;
-import com.yody.Server.dto.category.CategoryDTO;
 import lombok.Data;
 
 @Data
-public class CategoryReqDTO extends AbstractDTO<CategoryDTO> {
+public class CategoryResDTO extends AbstractDTO<CategoryResDTO> {
     private String name;
+    private String slug;
     private Integer parentId;
 }

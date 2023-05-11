@@ -1,7 +1,7 @@
 package com.yody.Server.components;
 
-import com.yody.Server.dto.category.CategoryDTO;
-import com.yody.Server.dto.category.CategoryReqDTO;
+import com.yody.Server.dto.category.CategoryAdminResDTO;
+import com.yody.Server.dto.category.CategoryAdminReqDTO;
 import com.yody.Server.entities.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
     private final ModelMapper modelMapper;
 
-    public CategoryDTO toDto(Category category) {
-        return this.modelMapper.map(category, CategoryDTO.class);
+    public CategoryAdminResDTO toDto(Category category) {
+        return this.modelMapper.map(category, CategoryAdminResDTO.class);
     }
 
-    public Category toEntity(CategoryReqDTO categoryDTO) {
+    public Category toEntity(CategoryAdminReqDTO categoryDTO) {
         return this.modelMapper.map(categoryDTO, Category.class);
     }
 }
