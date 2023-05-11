@@ -1,12 +1,11 @@
-package com.yody.Server.dto.shopping;
+package com.yody.Server.dto.cart;
 
-import com.yody.Server.dto.variant.ShoppingVariantDTO;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ShoppingFormReqDTO {
+public class CartRequestDTO {
     private String email;
-    private List<ShoppingVariantDTO> variants;
+    private List<CartItemRequestDTO> items;
 }

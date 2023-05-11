@@ -1,7 +1,7 @@
 package com.yody.Server.dto.order;
 
 import com.yody.Server.dto.AbstractDTO;
-import com.yody.Server.dto.UserDTO;
+import com.yody.Server.dto.user.UserDTO;
 import lombok.Data;
 
 import java.util.List;

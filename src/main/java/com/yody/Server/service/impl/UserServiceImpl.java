@@ -6,8 +6,8 @@ import com.yody.Server.components.MapperComponent;
 import com.yody.Server.config.JwtService;
 import com.yody.Server.dto.AuthenticationRequest;
 import com.yody.Server.dto.AuthenticationResponse;
-import com.yody.Server.dto.UserDTO;
-import com.yody.Server.dto.UserRegisterRequest;
+import com.yody.Server.dto.user.UserDTO;
+import com.yody.Server.dto.user.UserRegisterRequest;
 import com.yody.Server.entities.Role;
 import com.yody.Server.entities.User;
 import com.yody.Server.exception.InvalidException;
@@ -99,7 +99,7 @@ public class UserServiceImpl implements IUserService {
                     .token(jwtService.generateToken(user))
                     .type("bearer")
                     .principle(user.getEmail())
-                    .username(user.getUsername())
+                    .username(user.getFullName())
                     .roles(authorities)
                     .build();
 
