@@ -1,7 +1,6 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.product.ProductResAdminDTO;
-import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.service.IVariantService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

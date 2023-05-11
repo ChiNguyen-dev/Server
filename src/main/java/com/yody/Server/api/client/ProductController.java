@@ -1,6 +1,8 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.product.ProductResAdminDTO;
+import com.yody.Server.dto.product.SearchDataDTO;
+import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -45,11 +47,15 @@ public class ProductController {
 
     @GetMapping("/search")
     public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<String> slugs,
-                                            @RequestParam(required = false) List<String> sizes,
-                                            @RequestParam(required = false) List<String> colors,
-                                            @RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "default") String sortType) {
+                                                       @RequestParam(required = false) List<String> sizes,
+                                                       @RequestParam(required = false) List<String> colors,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "default") String sortType) {
         return this.productService.getProductByFilter(slugs, sizes, colors, page, sortType);
     }
 
+    @PostMapping("/search-by-name")
+    public List<VariantResDTO> searchByName(@RequestBody SearchDataDTO request) {
+        return this.productService.searchByName(request.getName());
+    }
 }

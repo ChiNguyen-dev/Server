@@ -1,10 +1,12 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
+import com.yody.Server.components.VariantMapper;
 import com.yody.Server.dto.image.ImageVariantDTO;
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.dto.variant.ProductVariantDTO;
+import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;
@@ -39,12 +41,24 @@ public class ProductServiceImpl implements IProductService {
     private final CategoryRepository categoryRepository;
     private final ProductImageReposiory productImageReposiory;
     private final ProductMapper productMapper;
+    private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
+
+    @Override
+    public List<VariantResDTO> searchByName(String name) {
+        Pageable pageable = PageRequest.of(0, 5);
+        return this.productRepository
+                .searchByName(pageable, name)
+                .stream()
+                .map(this.variantMapper::toVariantResDTO)
+                .toList();
+    }
 
     public List<ProductResAdminDTO> getAllProduct() {
         return this.productRepository
                 .findAll()
-                .stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                .stream()
+                .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
     }
 
@@ -109,7 +123,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductResAdminDTO> getProductByCategoryId(Long cateId) {
-        return this.productRepository.findByCategoryId(cateId)
+        return this.productRepository
+                .findByCategoryId(cateId)
                 .stream()
                 .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();

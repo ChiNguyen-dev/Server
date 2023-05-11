@@ -31,4 +31,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAll(Specification specification, Pageable pageable);
 
+    @Query("SELECT DISTINCT p FROM Product p where p.name like %:param%")
+    Page<Product> searchByName(Pageable pageable, @Param("param") String param);
 }

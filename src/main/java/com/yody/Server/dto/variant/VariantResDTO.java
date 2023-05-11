@@ -1,12 +1,13 @@
 package com.yody.Server.dto.variant;
 
-import com.yody.Server.dto.AbstractDTO;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-public class VariantResDTO extends AbstractDTO<VariantResDTO> {
+@Builder
+public class VariantResDTO {
     private String name;
     private String sku;
     private String image;
