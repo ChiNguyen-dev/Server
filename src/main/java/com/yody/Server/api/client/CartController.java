@@ -1,6 +1,7 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.cart.AddToCartDTO;
+import com.yody.Server.dto.cart.CartItemResponseDTO;
 import com.yody.Server.dto.cart.CartRequestDTO;
 import com.yody.Server.dto.cart.CartResponseDTO;
 import com.yody.Server.service.ICartService;
@@ -16,8 +17,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/carts")
 public class CartController {
     private final ICartService cartService;
-    @PostMapping("/add")
+    @GetMapping("/user/{email}")
+    public CartResponseDTO getCartByUserEmail(@PathVariable String email){
+        return  this.cartService.getCartByUserEmail(email);
+    }
+
+    @PostMapping()
     public CartResponseDTO addToCart (@RequestBody AddToCartDTO addToCartDTO) {
         return this.cartService.addToCart(addToCartDTO);
+    }
+    @GetMapping("/minus/{itemId}/{quantity}")
+    public CartItemResponseDTO minus(@PathVariable Long itemId, @PathVariable Long quantity){
+        return this.cartService.minus(itemId, quantity);
+    }
+    @GetMapping("/plus/{itemId}/{quantity}")
+    public CartItemResponseDTO plus(@PathVariable Long itemId, @PathVariable Long quantity){
+        return this.cartService.plus(itemId, quantity);
+    }
+    @DeleteMapping("/{itemId}")
+    public CartItemResponseDTO remove(@PathVariable Long itemId){
+        return  this.cartService.remove(itemId);
     }
 }
