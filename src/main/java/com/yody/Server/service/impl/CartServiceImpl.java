@@ -1,7 +1,9 @@
 package com.yody.Server.service.impl;
 
+import com.yody.Server.components.CartItemMapper;
 import com.yody.Server.components.CartMapper;
 import com.yody.Server.dto.cart.AddToCartDTO;
+import com.yody.Server.dto.cart.CartItemResponseDTO;
 import com.yody.Server.dto.cart.CartResponseDTO;
 import com.yody.Server.entities.*;
 import com.yody.Server.exception.NotFondException;
@@ -12,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -23,7 +24,9 @@ public class CartServiceImpl implements ICartService {
     private final CartRepository cartRepository;
     private final ProductVariantRepository variantRepository;
     private final UserRepository userRepository;
-    private final CartMapper mapper;
+    private final CartItemRepository itemRepository;
+    private final CartMapper cartMapper;
+    private final CartItemMapper itemMapper;
 
 
     @Override
@@ -61,6 +64,38 @@ public class CartServiceImpl implements ICartService {
                 item.setCart(cart);
             }
         }
-        return mapper.toDTO(this.cartRepository.save(cart));
+        return cartMapper.toDTO(this.cartRepository.save(cart));
     }
+
+    @Override
+    public CartItemResponseDTO minus(Long itemId, Long quantity) {
+        CartItem item = this.itemRepository.findById(itemId).orElseThrow(() -> new NotFondException("not found"));
+        Long currentQuantity = item.getQuantity();
+        if (currentQuantity - quantity >= 1) {
+            item.setQuantity(currentQuantity - quantity);
+        }
+        return this.itemMapper.toDto(this.itemRepository.save(item));
+    }
+
+    @Override
+    public CartItemResponseDTO plus(Long itemId, Long quantity) {
+        CartItem item = this.itemRepository.findById(itemId).orElseThrow(() -> new NotFondException("not found"));
+        Long currentQuantity = item.getQuantity();
+        item.setQuantity(currentQuantity + quantity);
+        return this.itemMapper.toDto(this.itemRepository.save(item));
+    }
+
+    @Override
+    public CartItemResponseDTO remove(Long itemId) {
+        CartItem item = this.itemRepository.findById(itemId).orElseThrow(() -> new NotFondException("item not found"));
+        itemRepository.delete(item);
+        return this.itemMapper.toDto(item);
+    }
+    @Override
+    public CartResponseDTO getCartByUserEmail(String email)  {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new NotFondException("user not found"));
+        Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException(" cart not found"));
+        return this.cartMapper.toDTO(cart);
+    }
+
 }

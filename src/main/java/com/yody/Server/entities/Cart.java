@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Data
@@ -20,12 +18,9 @@ import java.util.Map;
 @Slf4j
 @Table(name = "carts")
 public class Cart extends BaseEntity implements Serializable {
-    @Column
-    private BigDecimal total;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "cart")
     private List<CartItem> items;
 

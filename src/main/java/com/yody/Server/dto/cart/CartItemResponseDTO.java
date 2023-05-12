@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class CartItemResponseDTO {
+    private Long id;
     private ProductVariantResDTO variant;
     private Long quantity;
 }
