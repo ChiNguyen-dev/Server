@@ -28,9 +28,9 @@ public class Product extends BaseEntity implements Serializable {
     @JoinColumn(name = "category_id")
     @JsonIgnore
     private Category category;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductVariant> productVariants;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductImage> productImages;
     public void addProductVariant(ProductVariant productVariant) {
         this.productVariants.add(productVariant);

@@ -5,6 +5,7 @@ import com.yody.Server.components.VariantMapper;
 import com.yody.Server.dto.image.ImageVariantDTO;
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
+import com.yody.Server.dto.product.ShowPageDTO;
 import com.yody.Server.dto.variant.ProductVariantDTO;
 import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.entities.Category;
@@ -21,6 +22,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -60,6 +62,19 @@ public class ProductServiceImpl implements IProductService {
                 .stream()
                 .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
+    }
+
+    @Override
+    public ShowPageDTO showPage(int page) {
+        Pageable pageable = PageRequest.of(page, 2);
+        Page<Product> products = this.productRepository.findAll(pageable);
+        return ShowPageDTO.builder()
+                .products(products.stream()
+                        .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+                        .toList())
+                .totalPages(products.getTotalPages())
+                .totalElements(products.getTotalElements())
+                .build();
     }
 
     public ProductResAdminDTO getProductById(Long id) {

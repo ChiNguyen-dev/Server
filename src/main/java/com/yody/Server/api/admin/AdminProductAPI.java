@@ -2,6 +2,7 @@ package com.yody.Server.api.admin;
 
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
+import com.yody.Server.dto.product.ShowPageDTO;
 import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,8 @@ public class AdminProductAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResAdminDTO> getProducts() {
-        return this.productService.getAllProduct();
+    public ShowPageDTO getProducts(@RequestParam(defaultValue = "0") int page) {
+        return this.productService.showPage(page);
     }
 
     @GetMapping("/{id}")
