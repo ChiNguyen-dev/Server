@@ -9,6 +9,10 @@ import java.util.List;
 @Data
 public class PlaceOrderResponse extends AbstractDTO {
     private UserDTO user;
+    private String paymentType;
+    private String orderUsername;
+    private String phone;
+    private String note;
     private String address;
-    private List<LineItemResponse> lineItems;
+    private List<LineItemResponse> items;
 }

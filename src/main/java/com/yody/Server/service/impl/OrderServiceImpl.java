@@ -1,7 +1,6 @@
 package com.yody.Server.service.impl;
 
 import com.yody.Server.components.OrderMapper;
-import com.yody.Server.dto.order.LineItemResponse;
 import com.yody.Server.dto.order.PlaceOrderRequest;
 import com.yody.Server.dto.order.PlaceOrderResponse;
 import com.yody.Server.entities.*;
@@ -29,9 +28,9 @@ public class OrderServiceImpl implements IOrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public PlaceOrderResponse placeOrder(PlaceOrderRequest orderDTO) {
+    public PlaceOrderResponse placeOrder(PlaceOrderRequest request) {
         List<OrderItem> lines = new ArrayList<>();
-        orderDTO.getLineItems().forEach(line -> {
+        request.getItems().forEach(line -> {
             ProductVariant variant = variantRepository.findById(line.getVariantId())
                     .orElseThrow(() -> new NotFondException("variant do not exist in database"));
             OrderItem item = OrderItem.builder()
@@ -40,10 +39,14 @@ public class OrderServiceImpl implements IOrderService {
                     .build();
             lines.add(item);
         });
-        User user = userRepository.findById(orderDTO.getUserId()).orElse(null);
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow( () -> new NotFondException("user not found"));
         Order order = Order.builder()
+                .orderUsername(request.getOrderUsername())
+                .phone(request.getPhone())
                 .orderItems(lines)
-                .address(orderDTO.getAddress())
+                .note(request.getNote())
+                .paymentType(request.getPaymentType())
+                .address(request.getAddress())
                 .user(user)
                 .build();
         for (OrderItem line: lines) {

@@ -27,6 +27,4 @@ public class ProductVariant extends BaseEntity implements Serializable {
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
-    @OneToMany(mappedBy = "productVariant")
-    private List<CartItem> cartItems;
 }
