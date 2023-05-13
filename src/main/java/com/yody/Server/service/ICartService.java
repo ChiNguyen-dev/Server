@@ -13,5 +13,5 @@ public interface ICartService {
 
     CartItemResponseDTO remove(Long itemId);
 
-    CartResponseDTO getCartByUserEmail(String email);
+    CartResponseDTO getCartByCurrentUser();
 }

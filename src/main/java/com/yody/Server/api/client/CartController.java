@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/carts")
 public class CartController {
     private final ICartService cartService;
-    @GetMapping("/user/{email}")
-    public CartResponseDTO getCartByUserEmail(@PathVariable String email){
-        return  this.cartService.getCartByUserEmail(email);
+    @GetMapping()
+    public CartResponseDTO getCartByCurrentUser(){
+        return  this.cartService.getCartByCurrentUser();
     }
 
     @PostMapping()
