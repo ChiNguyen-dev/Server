@@ -1,6 +1,7 @@
 package com.yody.Server.dto.order;
 
 import com.yody.Server.dto.AbstractDTO;
+import com.yody.Server.dto.variant.ProductVariantResDTO;
 import com.yody.Server.entities.ProductVariant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LineItemResponse extends AbstractDTO {
-    private ProductVariant variant;
+public class LineItemResponse {
+    private Long id;
+    private ProductVariantResDTO variant;
     private int quantity;
 }
