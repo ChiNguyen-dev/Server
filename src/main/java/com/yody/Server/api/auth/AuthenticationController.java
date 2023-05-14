@@ -26,4 +26,8 @@ public class AuthenticationController {
     public UserDTO addUser(@RequestBody UserRegisterRequest userRegisterRequest) {
         return this.userService.saveUser(userRegisterRequest);
     }
+    @GetMapping("/validate/{email}")
+    public boolean validateEmail(@PathVariable String email){
+        return this.userService.validateEmail(email);
+    }
 }

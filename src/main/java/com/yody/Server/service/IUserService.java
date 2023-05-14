@@ -17,4 +17,5 @@ public interface IUserService {
 
     UserDTO saveUser(UserRegisterRequest userRegisterRequest);
     AuthenticationResponse authentication(AuthenticationRequest authenticationRequest);
+    boolean validateEmail(String email);
 }

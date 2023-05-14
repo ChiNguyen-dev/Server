@@ -108,5 +108,12 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public boolean validateEmail(String email) {
+        User user = this.userRepository.findByEmail(email).orElse(null);
+        if (user != null) return false;
+        return true;
+    }
+
 
 }
