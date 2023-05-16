@@ -8,7 +8,6 @@ import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CartRepository;
 import com.yody.Server.repositories.OrderRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
-import com.yody.Server.repositories.UserRepository;
 import com.yody.Server.service.IOrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +30,11 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public PlaceOrderResponse placeOrder(PlaceOrderRequest request) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<OrderItem> lines = new ArrayList<>();
-        request.getItems().forEach(line -> {
-            ProductVariant variant = variantRepository.findById(line.getVariantId())
+        Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException("cart not found"));
+        cart.getItems().forEach(line -> {
+            ProductVariant variant = variantRepository.findById(line.getProductVariant().getId())
                     .orElseThrow(() -> new NotFondException("variant do not exist in database"));
             OrderItem item = OrderItem.builder()
                     .variant(variant)
@@ -41,8 +42,6 @@ public class OrderServiceImpl implements IOrderService {
                     .build();
             lines.add(item);
         });
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException("cart not found"));
         this.cartRepository.delete(cart);
         Order order = Order.builder()
                 .orderUsername(request.getOrderUsername())
@@ -57,7 +56,6 @@ public class OrderServiceImpl implements IOrderService {
             line.setOrder(order);
         }
         orderRepository.save(order);
-        PlaceOrderResponse response = orderMapper.toDto(order);
-        return response;
+        return orderMapper.toDto(order);
     }
 }

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Table(name = "order_items")
 public class OrderItem extends  BaseEntity implements Serializable {
-    private int quantity;
+    private Long quantity;
 
     @ManyToOne
     @JoinColumn(name = "variant_id")

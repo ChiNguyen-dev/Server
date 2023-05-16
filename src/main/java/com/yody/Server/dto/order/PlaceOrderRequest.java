@@ -11,5 +11,4 @@ public class PlaceOrderRequest {
     private String phone;
     private String note;
     private String address;
-    private List<LineItemRequest> items;
 }

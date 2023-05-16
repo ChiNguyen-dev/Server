@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class LineItemResponse {
     private Long id;
     private ProductVariantResDTO variant;
-    private int quantity;
+    private Long quantity;
 }

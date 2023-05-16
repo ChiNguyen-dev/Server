@@ -45,7 +45,7 @@ public class ProductController {
         return this.productService.getProductByCategoryId(categoryId);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/filter")
     public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<String> slugs,
                                                        @RequestParam(required = false) List<String> sizes,
                                                        @RequestParam(required = false) List<String> colors,
