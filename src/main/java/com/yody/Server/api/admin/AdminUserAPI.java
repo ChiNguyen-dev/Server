@@ -21,7 +21,6 @@ public class AdminUserAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getUsers() {
         return this.IUserService.getUsers();
     }
@@ -42,10 +41,10 @@ public class AdminUserAPI {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/role/{roleName}")
+    @GetMapping("/{email}/role/{roleName}")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO addRoleToUser(@PathVariable String roleName, @PathVariable Long id) {
-        return this.IUserService.addRoleToUser(id, roleName);
+    public UserDTO addRoleToUser(@PathVariable String roleName, @PathVariable String email) {
+        return this.IUserService.addRoleToUser(email, roleName);
     }
 
 }

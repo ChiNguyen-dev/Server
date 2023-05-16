@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/orders")
-@PreAuthorize("hasAuthority('USER')")
+@RequestMapping("api/v1/auth/orders")
 public class OrderController {
     private final IOrderService orderService;
     @PostMapping

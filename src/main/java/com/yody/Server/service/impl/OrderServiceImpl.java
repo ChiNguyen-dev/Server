@@ -34,10 +34,8 @@ public class OrderServiceImpl implements IOrderService {
         List<OrderItem> lines = new ArrayList<>();
         Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException("cart not found"));
         cart.getItems().forEach(line -> {
-            ProductVariant variant = variantRepository.findById(line.getProductVariant().getId())
-                    .orElseThrow(() -> new NotFondException("variant do not exist in database"));
             OrderItem item = OrderItem.builder()
-                    .variant(variant)
+                    .variant(line.getProductVariant())
                     .quantity(line.getQuantity())
                     .build();
             lines.add(item);

@@ -55,8 +55,8 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public UserDTO addRoleToUser(Long id, String roleName) {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new NotFondException("user does not exits"));
+    public UserDTO addRoleToUser(String email, String roleName) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new NotFondException("user does not exits"));
         Role role = this.roleRepository.findByName(roleName);
         user.getRoles().add(role);
         return this.mapperComponent.toDto(this.userRepository.save(user));
