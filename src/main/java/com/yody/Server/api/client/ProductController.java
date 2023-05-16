@@ -19,9 +19,9 @@ import java.util.List;
 public class ProductController {
     private final IProductService productService;
 
-    @GetMapping("/category/{slug}")
-    public List<ProductResAdminDTO> getProductByCategorySlug(@PathVariable String slug) {
-        return this.productService.getProductByCategorySlug(slug);
+    @GetMapping("/{cateId}/show")
+    public List<ProductResAdminDTO> getProductByCategory(@PathVariable Long cateId) {
+        return this.productService.getProductByCategorySlug(cateId);
     }
 
     @GetMapping
@@ -54,7 +54,7 @@ public class ProductController {
         return this.productService.getProductByFilter(slugs, sizes, colors, page, sortType);
     }
 
-    @PostMapping("/search-by-name")
+    @PostMapping("/search")
     public List<VariantResDTO> searchByName(@RequestBody SearchDataDTO request) {
         return this.productService.searchByName(request.getName());
     }

@@ -19,7 +19,7 @@ public interface IProductService {
 
     ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO);
 
-    List<ProductResAdminDTO> getProductByCategorySlug(String slug);
+    List<ProductResAdminDTO> getProductByCategorySlug(Long cateId);
 
     List<ProductVariant> getVariantsByProductId(Long id);
 

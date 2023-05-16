@@ -125,10 +125,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductResAdminDTO> getProductByCategorySlug(String slug) {
+    public List<ProductResAdminDTO> getProductByCategorySlug(Long cateId) {
         Category category = this.categoryRepository
-                .findBySlug(slug)
-                .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
+                .findById(cateId).orElseThrow(() -> new NotFondException("Category not isExist in Database"));
         Pageable pageable = PageRequest.of(0, 8);
         return this.productRepository.findByCategoryId(pageable, category.getId())
                 .stream()
