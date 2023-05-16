@@ -13,7 +13,7 @@ public interface IUserService {
 
     UserDTO getUser(Long id);
 
-    UserDTO addRoleToUser(Long id, String roleName);
+    UserDTO addRoleToUser(String email, String roleName);
 
     UserDTO saveUser(UserRegisterRequest userRegisterRequest);
     AuthenticationResponse authentication(AuthenticationRequest authenticationRequest);

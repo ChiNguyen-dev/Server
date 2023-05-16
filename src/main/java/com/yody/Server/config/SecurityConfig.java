@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableMethodSecurity
 public class SecurityConfig {
     private final JwtAuthenticationFiler jwtAuthFilter;
     private final JtwEntryPoint jtwEntryPoint;
@@ -24,23 +23,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
+                .cors()
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jtwEntryPoint)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/products/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/categories/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("variants/**")
+                .requestMatchers("/api/v1/auth/**").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/api/v1/auth/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

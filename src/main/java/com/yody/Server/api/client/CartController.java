@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1/carts")
-@PreAuthorize("hasAuthority('USER')")
+@RequestMapping("/api/v1/auth/carts")
 public class CartController {
     private final ICartService cartService;
     @GetMapping()
