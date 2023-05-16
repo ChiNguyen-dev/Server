@@ -46,16 +46,17 @@ public class ProductController {
     }
 
     @GetMapping("/search/filter")
-    public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<String> slugs,
+    public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<Long> cateIds,
                                                        @RequestParam(required = false) List<String> sizes,
                                                        @RequestParam(required = false) List<String> colors,
                                                        @RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "default") String sortType) {
-        return this.productService.getProductByFilter(slugs, sizes, colors, page, sortType);
+        return this.productService.getProductByFilter(cateIds, sizes, colors, page, sortType);
     }
 
     @PostMapping("/search")
     public List<VariantResDTO> searchByName(@RequestBody SearchDataDTO request) {
         return this.productService.searchByName(request.getName());
     }
+
 }
