@@ -19,4 +19,5 @@ public class CategoryMapper {
     public Category toEntity(CategoryAdminReqDTO categoryDTO) {
         return this.modelMapper.map(categoryDTO, Category.class);
     }
+
 }

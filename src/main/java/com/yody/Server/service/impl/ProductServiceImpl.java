@@ -66,7 +66,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ShowPageDTO showPage(int page) {
-        Pageable pageable = PageRequest.of(page, 2);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<Product> products = this.productRepository.findAll(pageable);
         return ShowPageDTO.builder()
                 .products(products.stream()

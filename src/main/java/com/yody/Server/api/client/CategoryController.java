@@ -1,12 +1,11 @@
 package com.yody.Server.api.client;
 
 import com.yody.Server.dto.category.CategoryAdminResDTO;
+import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +14,15 @@ import java.util.List;
 @RequestMapping("api/v1/categories")
 public class CategoryController {
     private final ICategoryService categoryService;
-    @GetMapping("/{slug}")
-    public List<CategoryAdminResDTO> getSubCategoryBySlug(@PathVariable String slug){
-        return this.categoryService.getSubCategoryBySlug(slug);
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoryAdminResDTO> getCategories() {
+        return this.categoryService.getCategories();
+    }
+
+    @GetMapping("/{id}/children")
+    public List<CategoryResDTO> getSubCategoryByCateId(@PathVariable Long id) {
+        return this.categoryService.getSubCategoryByCateId(id);
     }
 }

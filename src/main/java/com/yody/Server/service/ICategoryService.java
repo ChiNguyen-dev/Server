@@ -2,20 +2,21 @@ package com.yody.Server.service;
 
 import com.yody.Server.dto.category.CategoryAdminResDTO;
 import com.yody.Server.dto.category.CategoryAdminReqDTO;
+import com.yody.Server.dto.category.CategoryResDTO;
 
 import java.util.List;
 
 public interface ICategoryService {
 
-     List<CategoryAdminResDTO> getCategories();
+    List<CategoryAdminResDTO> getCategories();
 
-     CategoryAdminResDTO getCategoryById(Long id);
+    CategoryAdminResDTO getCategoryById(Long id);
 
-     CategoryAdminResDTO addCategory(CategoryAdminReqDTO categoryRequestDTO);
+    List<CategoryResDTO> getSubCategoryByCateId(Long id);
 
-     CategoryAdminResDTO update(Long id, CategoryAdminReqDTO categoryRequestDTO);
+    CategoryAdminResDTO addCategory(CategoryAdminReqDTO categoryRequestDTO);
 
-     boolean delete(Long id);
+    CategoryAdminResDTO update(Long id, CategoryAdminReqDTO categoryRequestDTO);
 
-     List<CategoryAdminResDTO> getSubCategoryBySlug(String slug);
+    boolean delete(Long id);
 }
