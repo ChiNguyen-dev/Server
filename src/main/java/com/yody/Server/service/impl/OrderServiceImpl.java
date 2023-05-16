@@ -5,13 +5,14 @@ import com.yody.Server.dto.order.PlaceOrderRequest;
 import com.yody.Server.dto.order.PlaceOrderResponse;
 import com.yody.Server.entities.*;
 import com.yody.Server.exception.NotFondException;
+import com.yody.Server.repositories.CartRepository;
 import com.yody.Server.repositories.OrderRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
-import com.yody.Server.repositories.UserRepository;
 import com.yody.Server.service.IOrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,14 +25,16 @@ import java.util.List;
 public class OrderServiceImpl implements IOrderService {
     private final OrderRepository orderRepository;
     private final ProductVariantRepository variantRepository;
-    private final UserRepository userRepository;
+    private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
 
     @Override
     public PlaceOrderResponse placeOrder(PlaceOrderRequest request) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<OrderItem> lines = new ArrayList<>();
-        request.getItems().forEach(line -> {
-            ProductVariant variant = variantRepository.findById(line.getVariantId())
+        Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException("cart not found"));
+        cart.getItems().forEach(line -> {
+            ProductVariant variant = variantRepository.findById(line.getProductVariant().getId())
                     .orElseThrow(() -> new NotFondException("variant do not exist in database"));
             OrderItem item = OrderItem.builder()
                     .variant(variant)
@@ -39,7 +42,7 @@ public class OrderServiceImpl implements IOrderService {
                     .build();
             lines.add(item);
         });
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow( () -> new NotFondException("user not found"));
+        this.cartRepository.delete(cart);
         Order order = Order.builder()
                 .orderUsername(request.getOrderUsername())
                 .phone(request.getPhone())
@@ -53,7 +56,6 @@ public class OrderServiceImpl implements IOrderService {
             line.setOrder(order);
         }
         orderRepository.save(order);
-        PlaceOrderResponse response = orderMapper.toDto(order);
-        return response;
+        return orderMapper.toDto(order);
     }
 }

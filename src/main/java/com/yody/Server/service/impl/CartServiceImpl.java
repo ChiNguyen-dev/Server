@@ -12,6 +12,8 @@ import com.yody.Server.service.ICartService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,10 +30,9 @@ public class CartServiceImpl implements ICartService {
     private final CartMapper cartMapper;
     private final CartItemMapper itemMapper;
 
-
     @Override
     public CartResponseDTO addToCart(AddToCartDTO addToCartDTO) {
-        User user = this.userRepository.findByEmail(addToCartDTO.getEmail()).orElseThrow(() -> new NotFondException("not found user"));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ProductVariant variant = this.variantRepository.findById(addToCartDTO.getVariantId()).orElseThrow(() -> new NotFondException("variant not found"));
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
         CartItem item;
@@ -92,8 +93,8 @@ public class CartServiceImpl implements ICartService {
         return this.itemMapper.toDto(item);
     }
     @Override
-    public CartResponseDTO getCartByUserEmail(String email)  {
-        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new NotFondException("user not found"));
+    public CartResponseDTO getCartByCurrentUser()  {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Cart cart = this.cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFondException(" cart not found"));
         return this.cartMapper.toDTO(cart);
     }

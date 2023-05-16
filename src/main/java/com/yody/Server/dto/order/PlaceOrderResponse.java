@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 public class PlaceOrderResponse extends AbstractDTO {
-    private UserDTO user;
     private String paymentType;
     private String orderUsername;
     private String phone;
