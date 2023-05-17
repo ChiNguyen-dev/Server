@@ -2,6 +2,7 @@ package com.yody.Server.api.client;
 
 import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.dto.product.SearchDataDTO;
+import com.yody.Server.dto.product.ShowPageDTO;
 import com.yody.Server.dto.variant.VariantResDTO;
 import com.yody.Server.entities.ProductVariant;
 import com.yody.Server.service.IProductService;
@@ -46,11 +47,11 @@ public class ProductController {
     }
 
     @GetMapping("/search/filter")
-    public List<ProductResAdminDTO> getProductByFilter(@RequestParam(required = false) List<Long> cateIds,
-                                                       @RequestParam(required = false) List<String> sizes,
-                                                       @RequestParam(required = false) List<String> colors,
-                                                       @RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam(defaultValue = "default") String sortType) {
+    public ShowPageDTO getProductByFilter(@RequestParam(required = false) List<Long> cateIds,
+                                          @RequestParam(required = false) List<String> sizes,
+                                          @RequestParam(required = false) List<String> colors,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "default") String sortType) {
         return this.productService.getProductByFilter(cateIds, sizes, colors, page, sortType);
     }
 

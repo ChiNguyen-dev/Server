@@ -2,7 +2,6 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
 import com.yody.Server.components.VariantMapper;
-import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.dto.image.ImageVariantDTO;
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
@@ -18,7 +17,6 @@ import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
-import com.yody.Server.service.ICategoryService;
 import com.yody.Server.service.IProductService;
 import com.yody.Server.service.IStorageService;
 import jakarta.transaction.Transactional;
@@ -32,7 +30,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +46,6 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
     private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
-    private final ICategoryService categoryService;
     private IStorageService storageService;
 
 
@@ -167,37 +163,50 @@ public class ProductServiceImpl implements IProductService {
     }
   
     @Override
-    public List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
+    public ShowPageDTO getProductByFilter(List<Long> cateIds,
                                                        List<String> sizes,
                                                        List<String> colors,
                                                        int page,
                                                        String sortType) {
         Pageable pageable = null;
+        int pageSize = 1;
+        page = page >= 1 ? page - 1 : page;
         switch (sortType.toUpperCase()) {
             case "TỪ A - Z": {
-                pageable = PageRequest.of(page, 20, Sort.by("name").ascending());
+                pageable = PageRequest.of(page, pageSize, Sort.by("name").ascending());
                 break;
             }
             case "TỪ Z - A": {
-                pageable = PageRequest.of(page, 20, Sort.by("name").descending());
+                pageable = PageRequest.of(page, pageSize, Sort.by("name").descending());
                 break;
             }
             case "GIÁ GIẢM DẦN": {
-                pageable = PageRequest.of(page, 20, Sort.by("price").descending());
+                pageable = PageRequest.of(page, pageSize, Sort.by("price").descending());
                 break;
             }
             case "GIÁ TĂNG DẦN": {
-                pageable = PageRequest.of(page, 20, Sort.by("price").ascending());
+                pageable = PageRequest.of(page, pageSize, Sort.by("price").ascending());
                 break;
             }
             default: {
-                pageable = PageRequest.of(page, 20);
+                pageable = PageRequest.of(page, pageSize);
                 break;
             }
         }
+
         Specification<Product> specification = Specification.where(SearchSpecification.isInCateIds(cateIds).and(SearchSpecification.isInColors(colors).and(SearchSpecification.isInSizes(sizes))));
-        return this.productRepository.findAll(specification,pageable).stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+        Page<Product> pageProduct =  this.productRepository.findAll(specification,pageable);
+        List<ProductResAdminDTO> products = pageProduct.getContent().
+                stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
+        return ShowPageDTO.builder()
+                .totalPages(pageProduct.getTotalPages())
+                .totalElements(pageProduct.getTotalElements())
+                .products(products)
+                .build();
+
+
+
     }
 
 
