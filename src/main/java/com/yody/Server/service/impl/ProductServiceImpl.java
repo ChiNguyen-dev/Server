@@ -18,6 +18,7 @@ import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.IProductService;
+import com.yody.Server.service.IStorageService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,7 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
     private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
+    private IStorageService storageService;
 
     @Override
     public List<VariantResDTO> searchByName(String name) {
@@ -142,6 +144,21 @@ public class ProductServiceImpl implements IProductService {
                 .stream()
                 .map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
+    }
+
+    @Override
+    public ProductResAdminDTO removeById(Long id) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
+        product.getProductVariants().forEach(productVariant -> {
+            String[] split = productVariant.getImage().split("/FileUpload/");
+            this.storageService.deleteFile(split[split.length - 1]);
+        });
+        product.getProductImages().forEach(i -> {
+            String[] split = i.getSrc().split("/FileUpload/");
+            this.storageService.deleteFile(split[split.length - 1]);
+        });
+        this.productRepository.delete(product);
+        return this.productMapper.toDto(product);
     }
 
     @Override

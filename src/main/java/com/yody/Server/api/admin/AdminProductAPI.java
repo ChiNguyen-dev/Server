@@ -7,6 +7,7 @@ import com.yody.Server.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,5 +32,10 @@ public class AdminProductAPI {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResAdminDTO addProduct(@RequestBody DataProductReqDTO dataProductReqDTO) {
         return this.productService.addProduct(dataProductReqDTO);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ProductResAdminDTO remove(@PathVariable Long id) {
+        return  this.productService.removeById(id);
     }
 }

@@ -25,6 +25,8 @@ public interface IProductService {
 
     List<ProductResAdminDTO> getProductByCategoryId(Long cateId);
 
+    ProductResAdminDTO removeById(Long id);
+
     List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
                                                 List<String> colors,
                                                 List<String> sizes,
