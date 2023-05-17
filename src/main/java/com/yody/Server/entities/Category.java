@@ -21,7 +21,7 @@ public class Category extends BaseEntity implements Serializable {
     @Column
     private String slug;
     @Column
-    private Integer parentId;
+    private Long parentId;
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 }

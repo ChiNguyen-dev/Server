@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class CategoryAdminReqDTO extends AbstractDTO<CategoryAdminResDTO> {
     private String name;
-    private Integer parentId;
+    private Long parentId;
 }

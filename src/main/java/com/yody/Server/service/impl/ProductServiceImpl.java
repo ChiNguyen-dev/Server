@@ -2,6 +2,7 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
 import com.yody.Server.components.VariantMapper;
+import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.dto.image.ImageVariantDTO;
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
@@ -17,6 +18,7 @@ import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
+import com.yody.Server.service.ICategoryService;
 import com.yody.Server.service.IProductService;
 import com.yody.Server.service.IStorageService;
 import jakarta.transaction.Transactional;
@@ -30,6 +32,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +49,9 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
     private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
+    private final ICategoryService categoryService;
     private IStorageService storageService;
+
 
     @Override
     public List<VariantResDTO> searchByName(String name) {
@@ -160,11 +165,11 @@ public class ProductServiceImpl implements IProductService {
         this.productRepository.delete(product);
         return this.productMapper.toDto(product);
     }
-
+  
     @Override
-    public List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
-                                                       List<String> colors,
+    public List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
                                                        List<String> sizes,
+                                                       List<String> colors,
                                                        int page,
                                                        String sortType) {
         Pageable pageable = null;
@@ -190,9 +195,11 @@ public class ProductServiceImpl implements IProductService {
                 break;
             }
         }
-        Specification<Product> specification = SearchSpecification.getSpecification(slugs, colors, sizes);
-        return this.productRepository.findAll(specification, pageable).stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
+        Specification<Product> specification = Specification.where(SearchSpecification.isInCateIds(cateIds).and(SearchSpecification.isInColors(colors).and(SearchSpecification.isInSizes(sizes))));
+        return this.productRepository.findAll(specification,pageable).stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
     }
+
+
 }
 

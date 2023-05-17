@@ -26,10 +26,11 @@ public interface IProductService {
     List<ProductResAdminDTO> getProductByCategoryId(Long cateId);
 
     ProductResAdminDTO removeById(Long id);
-
-    List<ProductResAdminDTO> getProductByFilter(List<String> slugs,
-                                                List<String> colors,
+  
+    List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
                                                 List<String> sizes,
+                                                List<String> colors,
                                                 int page,
                                                 String sortType);
+
 }

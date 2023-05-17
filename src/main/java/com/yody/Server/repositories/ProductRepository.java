@@ -1,5 +1,6 @@
 package com.yody.Server.repositories;
 
+import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.entities.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -19,5 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAll(Specification specification, Pageable pageable);
 
+    @Query("SELECT p FROM Product p WHERE p.category.id = :cateId OR p.category.parentId = :cateId")
+    List<Product> findProductByCategoryId(Pageable pageable,@Param("cateId") Long cateId);
+  
     Page<Product> findByNameContaining(Pageable pageable, String name);
 }
