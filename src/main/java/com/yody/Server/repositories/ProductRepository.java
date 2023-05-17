@@ -1,13 +1,10 @@
 package com.yody.Server.repositories;
 
 import com.yody.Server.entities.Product;
-import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,9 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findAll(Pageable pageable);
 
-
     List<Product> findAll(Specification specification, Pageable pageable);
 
-    @Query("SELECT DISTINCT p FROM Product p where p.name like %:param%")
-    Page<Product> searchByName(Pageable pageable, @Param("param") String param);
+    Page<Product> findByNameContaining(Pageable pageable, String name);
 }

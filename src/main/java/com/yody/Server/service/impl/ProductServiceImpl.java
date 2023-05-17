@@ -50,7 +50,7 @@ public class ProductServiceImpl implements IProductService {
     public List<VariantResDTO> searchByName(String name) {
         Pageable pageable = PageRequest.of(0, 5);
         return this.productRepository
-                .searchByName(pageable, name)
+                .findByNameContaining(pageable, name)
                 .stream()
                 .map(this.variantMapper::toVariantResDTO)
                 .toList();
