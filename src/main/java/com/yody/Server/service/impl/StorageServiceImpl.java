@@ -2,6 +2,7 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.api.admin.AdminFileUploadAPI;
 import com.yody.Server.service.IStorageService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -10,6 +11,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -22,6 +24,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class StorageServiceImpl implements IStorageService {
 
     public final Path storageFolder = Paths.get("uploads");
@@ -101,12 +104,14 @@ public class StorageServiceImpl implements IStorageService {
     }
 
     @Override
-    public void deleteAllFile() {
-
+    public boolean deleteFile(String fileName) {
+        String path = this.storageFolder.toString() + "/" + fileName;
+        File file = new File(path);
+        return file.delete();
     }
 
     private boolean isImageFile(MultipartFile file) {
         String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-        return Arrays.asList(new String[]{"png", "jpg", "jpeg", "bmp","webp"}).contains(fileExtension.trim().toLowerCase());
+        return Arrays.asList(new String[]{"png", "jpg", "jpeg", "bmp", "webp"}).contains(fileExtension.trim().toLowerCase());
     }
 }

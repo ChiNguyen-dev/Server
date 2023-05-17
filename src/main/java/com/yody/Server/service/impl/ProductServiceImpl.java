@@ -20,6 +20,7 @@ import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.ICategoryService;
 import com.yody.Server.service.IProductService;
+import com.yody.Server.service.IStorageService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +50,14 @@ public class ProductServiceImpl implements IProductService {
     private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
     private final ICategoryService categoryService;
+    private IStorageService storageService;
+
 
     @Override
     public List<VariantResDTO> searchByName(String name) {
         Pageable pageable = PageRequest.of(0, 5);
         return this.productRepository
-                .searchByName(pageable, name)
+                .findByNameContaining(pageable, name)
                 .stream()
                 .map(this.variantMapper::toVariantResDTO)
                 .toList();
@@ -148,6 +151,21 @@ public class ProductServiceImpl implements IProductService {
                 .toList();
     }
 
+    @Override
+    public ProductResAdminDTO removeById(Long id) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
+        product.getProductVariants().forEach(productVariant -> {
+            String[] split = productVariant.getImage().split("/FileUpload/");
+            this.storageService.deleteFile(split[split.length - 1]);
+        });
+        product.getProductImages().forEach(i -> {
+            String[] split = i.getSrc().split("/FileUpload/");
+            this.storageService.deleteFile(split[split.length - 1]);
+        });
+        this.productRepository.delete(product);
+        return this.productMapper.toDto(product);
+    }
+  
     @Override
     public List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
                                                        List<String> sizes,
