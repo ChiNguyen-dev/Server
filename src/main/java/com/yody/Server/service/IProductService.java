@@ -27,7 +27,7 @@ public interface IProductService {
 
     ProductResAdminDTO removeById(Long id);
   
-    List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
+    ShowPageDTO getProductByFilter(List<Long> cateIds,
                                                 List<String> sizes,
                                                 List<String> colors,
                                                 int page,
