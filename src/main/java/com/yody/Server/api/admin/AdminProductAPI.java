@@ -34,8 +34,8 @@ public class AdminProductAPI {
         return this.productService.addProduct(dataProductReqDTO);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ProductResAdminDTO remove(@PathVariable Long id) {
-        return  this.productService.removeById(id);
+       return this.productService.removeById(id);
     }
 }

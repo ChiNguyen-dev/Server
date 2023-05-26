@@ -109,8 +109,9 @@ public class ProductServiceImpl implements IProductService {
                         .src(path)
                         .product(product)
                         .build());
-                if (!imageOfVariant.containsKey(imageVariant.getSku()))
+                if (!imageOfVariant.containsKey(imageVariant.getSku())) {
                     imageOfVariant.put(imageVariant.getSku(), productImage.getSrc());
+                }
                 product.addProductImage(productImage);
             }
         }
@@ -150,10 +151,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResAdminDTO removeById(Long id) {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
-        product.getProductVariants().forEach(productVariant -> {
-            String[] split = productVariant.getImage().split("/FileUpload/");
-            this.storageService.deleteFile(split[split.length - 1]);
-        });
         product.getProductImages().forEach(i -> {
             String[] split = i.getSrc().split("/FileUpload/");
             this.storageService.deleteFile(split[split.length - 1]);
@@ -161,7 +158,7 @@ public class ProductServiceImpl implements IProductService {
         this.productRepository.delete(product);
         return this.productMapper.toDto(product);
     }
-  
+
     @Override
     public ShowPageDTO getProductByFilter(List<Long> cateIds,
                                                        List<String> sizes,
