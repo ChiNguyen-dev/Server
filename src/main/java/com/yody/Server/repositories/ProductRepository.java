@@ -21,8 +21,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAll(Specification specification, Pageable pageable);
 
-    @Query("SELECT p FROM Product p WHERE p.category.id = :cateId OR p.category.parentId = :cateId")
-    List<Product> findProductByCategoryId(Pageable pageable,@Param("cateId") Long cateId);
-  
     Page<Product> findByNameContaining(Pageable pageable, String name);
 }
