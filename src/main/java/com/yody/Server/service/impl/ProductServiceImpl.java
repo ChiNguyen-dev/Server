@@ -2,7 +2,6 @@ package com.yody.Server.service.impl;
 
 import com.yody.Server.components.ProductMapper;
 import com.yody.Server.components.VariantMapper;
-import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.dto.image.ImageVariantDTO;
 import com.yody.Server.dto.product.DataProductReqDTO;
 import com.yody.Server.dto.product.ProductResAdminDTO;
@@ -18,7 +17,6 @@ import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
-import com.yody.Server.service.ICategoryService;
 import com.yody.Server.service.IProductService;
 import com.yody.Server.service.IStorageService;
 import jakarta.transaction.Transactional;
@@ -32,7 +30,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +46,6 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
     private final VariantMapper variantMapper;
     private final ModelMapper modelMapper;
-    private final ICategoryService categoryService;
     private IStorageService storageService;
 
 
@@ -113,8 +109,9 @@ public class ProductServiceImpl implements IProductService {
                         .src(path)
                         .product(product)
                         .build());
-                if (!imageOfVariant.containsKey(imageVariant.getSku()))
+                if (!imageOfVariant.containsKey(imageVariant.getSku())) {
                     imageOfVariant.put(imageVariant.getSku(), productImage.getSrc());
+                }
                 product.addProductImage(productImage);
             }
         }
@@ -154,10 +151,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResAdminDTO removeById(Long id) {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new NotFondException("Not fond product"));
-        product.getProductVariants().forEach(productVariant -> {
-            String[] split = productVariant.getImage().split("/FileUpload/");
-            this.storageService.deleteFile(split[split.length - 1]);
-        });
         product.getProductImages().forEach(i -> {
             String[] split = i.getSrc().split("/FileUpload/");
             this.storageService.deleteFile(split[split.length - 1]);
@@ -165,7 +158,7 @@ public class ProductServiceImpl implements IProductService {
         this.productRepository.delete(product);
         return this.productMapper.toDto(product);
     }
-  
+
     @Override
     public List<ProductResAdminDTO> getProductByFilter(List<Long> cateIds,
                                                        List<String> sizes,
