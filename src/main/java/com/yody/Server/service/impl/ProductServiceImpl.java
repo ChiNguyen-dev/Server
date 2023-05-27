@@ -174,7 +174,7 @@ public class ProductServiceImpl implements IProductService {
                                           String sortType) {
 
         Pageable pageable = null;
-        int pageSize = 10;
+        int pageSize = 8;
         page = page >= 1 ? page - 1 : page;
         switch (sortType.toUpperCase()) {
             case "TỪ A - Z": {
