@@ -93,38 +93,45 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResAdminDTO addProduct(DataProductReqDTO dataProductReqDTO) {
         Map<String, String> imageOfVariant = new HashMap<>();
-        if (dataProductReqDTO.getImages().isEmpty()) throw new NotFondException("Images Not Empty.");
-        if (dataProductReqDTO.getProductVariants().isEmpty()) throw new NotFondException("Option item Not Empty.");
-        Category category = this.categoryRepository
-                .findById(dataProductReqDTO.getProduct().getCategoryId())
+        List<ProductVariantDTO> productVariants = dataProductReqDTO.getProductVariants();
+        List<ImageVariantDTO> images = dataProductReqDTO.getImages();
+
+        if (images.isEmpty()) throw new NotFondException("Images Not Empty.");
+        if (productVariants.isEmpty()) throw new NotFondException("Option item Not Empty.");
+
+        Category category = this.categoryRepository.findById(dataProductReqDTO.getProduct().getCategoryId())
                 .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
+        Product product = this.productRepository.save(this.productMapper.toEntity(dataProductReqDTO.getProduct(), category));
 
-        Product product = this.productRepository
-                .save(this.productMapper.toEntity(dataProductReqDTO.getProduct(), category));
-
-        for (ImageVariantDTO imageVariant : dataProductReqDTO.getImages()) {
-            for (String path : imageVariant.getPaths()) {
-                ProductImage productImage = productImageReposiory.save(ProductImage.builder()
-                        .name(imageVariant.getSku())
-                        .src(path)
-                        .product(product)
-                        .build());
-                if (!imageOfVariant.containsKey(imageVariant.getSku())) {
-                    imageOfVariant.put(imageVariant.getSku(), productImage.getSrc());
-                }
+        images.forEach(imageVariantDTO -> {
+            if (imageVariantDTO.getPaths().isEmpty())
+                throw new NotFondException("Images of " + imageVariantDTO.getSku() + " Not Empty.");
+            imageVariantDTO.getPaths().forEach(path -> {
+                ProductImage productImage = productImageReposiory.save(
+                        ProductImage.builder()
+                                .name(imageVariantDTO.getSku())
+                                .src(path)
+                                .product(product)
+                                .build()
+                );
+                if (!imageOfVariant.containsKey(imageVariantDTO.getSku()))
+                    imageOfVariant.put(imageVariantDTO.getSku(), productImage.getSrc());
                 product.addProductImage(productImage);
-            }
-        }
-        for (ProductVariantDTO variant : dataProductReqDTO.getProductVariants()) {
-            ProductVariant productVariant = this.productVariantRepository.save(ProductVariant.builder()
-                    .sku(variant.getSku())
-                    .image(imageOfVariant.get(variant.getSku()))
-                    .size(variant.getSize())
-                    .color(variant.getColor())
-                    .product(product)
-                    .build());
+            });
+        });
+
+        productVariants.forEach(productVariantDTO -> {
+            ProductVariant productVariant = this.productVariantRepository.save(
+                    ProductVariant.builder()
+                            .sku(productVariantDTO.getSku())
+                            .image(imageOfVariant.get(productVariantDTO.getSku()))
+                            .size(productVariantDTO.getSize())
+                            .color(productVariantDTO.getColor())
+                            .product(product)
+                            .build()
+            );
             product.addProductVariant(productVariant);
-        }
+        });
         return this.productMapper.toDto(this.productRepository.save(product));
     }
 
@@ -161,10 +168,11 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ShowPageDTO getProductByFilter(List<Long> cateIds,
-                                                       List<String> sizes,
-                                                       List<String> colors,
-                                                       int page,
-                                                       String sortType) {
+                                          List<String> sizes,
+                                          List<String> colors,
+                                          int page,
+                                          String sortType) {
+
         Pageable pageable = null;
         int pageSize = 1;
         page = page >= 1 ? page - 1 : page;
@@ -192,7 +200,8 @@ public class ProductServiceImpl implements IProductService {
         }
 
         Specification<Product> specification = Specification.where(SearchSpecification.isInCateIds(cateIds).and(SearchSpecification.isInColors(colors).and(SearchSpecification.isInSizes(sizes))));
-        Page<Product> pageProduct =  this.productRepository.findAll(specification,pageable);
+        Page<Product> pageProduct = this.productRepository.findAll(specification, pageable);
+
         List<ProductResAdminDTO> products = pageProduct.getContent().
                 stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
@@ -201,9 +210,6 @@ public class ProductServiceImpl implements IProductService {
                 .totalElements(pageProduct.getTotalElements())
                 .products(products)
                 .build();
-
-
-
     }
 
 
