@@ -9,7 +9,7 @@ import com.yody.Server.entities.ProductVariant;
 import java.util.List;
 
 public interface IProductService {
-    List<VariantResDTO> searchByName(String name);
+    List<ProductResAdminDTO> searchByName(String name);
 
     List<ProductResAdminDTO> getAllProduct();
 

@@ -50,12 +50,12 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
-    public List<VariantResDTO> searchByName(String name) {
+    public List<ProductResAdminDTO> searchByName(String name) {
         Pageable pageable = PageRequest.of(0, 5);
         return this.productRepository
                 .findByNameContaining(pageable, name)
                 .stream()
-                .map(this.variantMapper::toVariantResDTO)
+                .map(this.productMapper::toDto)
                 .toList();
     }
 

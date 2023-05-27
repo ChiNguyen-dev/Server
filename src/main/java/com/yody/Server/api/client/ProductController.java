@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     @PostMapping("/search")
-    public List<VariantResDTO> searchByName(@RequestBody SearchDataDTO request) {
+    public List<ProductResAdminDTO> searchByName(@RequestBody SearchDataDTO request) {
         return this.productService.searchByName(request.getName());
     }
 
