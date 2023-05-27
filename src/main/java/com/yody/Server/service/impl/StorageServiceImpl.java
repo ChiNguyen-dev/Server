@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StorageServiceImpl implements IStorageService {
 
-    public final Path storageFolder = Paths.get("src/main/resources/uploads");
+    public final Path storageFolder = Paths.get("uploads");
 
     public StorageServiceImpl() {
         try {
