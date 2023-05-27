@@ -172,6 +172,7 @@ public class ProductServiceImpl implements IProductService {
                                           List<String> colors,
                                           int page,
                                           String sortType) {
+
         Pageable pageable = null;
         int pageSize = 1;
         page = page >= 1 ? page - 1 : page;
@@ -200,6 +201,7 @@ public class ProductServiceImpl implements IProductService {
 
         Specification<Product> specification = Specification.where(SearchSpecification.isInCateIds(cateIds).and(SearchSpecification.isInColors(colors).and(SearchSpecification.isInSizes(sizes))));
         Page<Product> pageProduct = this.productRepository.findAll(specification, pageable);
+
         List<ProductResAdminDTO> products = pageProduct.getContent().
                 stream().map(Product -> this.modelMapper.map(Product, ProductResAdminDTO.class))
                 .toList();
@@ -208,8 +210,6 @@ public class ProductServiceImpl implements IProductService {
                 .totalElements(pageProduct.getTotalElements())
                 .products(products)
                 .build();
-
-
     }
 
 
