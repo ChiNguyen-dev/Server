@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/admin/users")
+@RequestMapping("/api/v1/auth/admin/users")
 public class AdminUserAPI {
 
     private final IUserService IUserService;

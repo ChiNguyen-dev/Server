@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(jtwEntryPoint)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/api/v1/auth/**").hasAnyAuthority("USER")
                 .requestMatchers("/api/v1/auth/admin/**").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
                 .and()

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/admin/categories")
+@RequestMapping("/api/v1/auth/admin/categories")
 public class AdminCategoryAPI {
 
     public final ICategoryService iCategoryService;
