@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:4306
--- Generation Time: May 27, 2023 at 10:36 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th6 21, 2023 lúc 05:02 PM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbyody`
+-- Cơ sở dữ liệu: `dbyody`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carts`
+-- Cấu trúc bảng cho bảng `carts`
 --
 
 CREATE TABLE `carts` (
@@ -35,16 +35,17 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `carts`
+-- Đang đổ dữ liệu cho bảng `carts`
 --
 
 INSERT INTO `carts` (`id`, `create_at`, `update_at`, `user_id`) VALUES
-(4, '2023-05-27 14:40:35.797000', '2023-05-27 14:40:35.797000', 11);
+(4, '2023-05-27 14:40:35.797000', '2023-05-27 14:40:35.797000', 11),
+(13, '2023-05-29 11:28:33.090000', '2023-05-29 11:28:33.090000', 13);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart_item`
+-- Cấu trúc bảng cho bảng `cart_item`
 --
 
 CREATE TABLE `cart_item` (
@@ -56,10 +57,17 @@ CREATE TABLE `cart_item` (
   `variant_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `cart_item`
+--
+
+INSERT INTO `cart_item` (`id`, `create_at`, `update_at`, `quantity`, `cart_id`, `variant_id`) VALUES
+(40, '2023-05-29 11:28:33.100000', '2023-05-29 11:28:33.100000', 3, 13, 157);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Cấu trúc bảng cho bảng `categories`
 --
 
 CREATE TABLE `categories` (
@@ -72,7 +80,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `categories`
+-- Đang đổ dữ liệu cho bảng `categories`
 --
 
 INSERT INTO `categories` (`id`, `create_at`, `update_at`, `name`, `parent_id`, `slug`) VALUES
@@ -97,12 +105,14 @@ INSERT INTO `categories` (`id`, `create_at`, `update_at`, `name`, `parent_id`, `
 (19, '2023-05-16 14:21:10.234000', '2023-05-16 14:21:10.234000', 'Quần Jeans', 18, 'quan-jeans'),
 (20, '2023-05-16 14:21:22.218000', '2023-05-16 14:21:22.218000', 'Quần kaki', 18, 'quan-kaki'),
 (21, '2023-05-16 14:21:37.789000', '2023-05-16 14:21:37.789000', 'Quần Short', 18, 'quan-short'),
-(22, '2023-05-16 14:22:10.910000', '2023-05-16 14:22:10.910000', 'Quần Âu', 18, 'quan-au');
+(22, '2023-05-16 14:22:10.910000', '2023-05-16 14:22:10.910000', 'Quần Âu', 18, 'quan-au'),
+(24, '2023-05-28 21:58:44.351000', '2023-05-28 21:58:44.351000', 'Bộ Sưu Tập', 0, 'bo-suu-tap'),
+(25, '2023-05-28 21:58:55.804000', '2023-05-28 21:58:55.804000', 'Đồng phục', 0, 'ong-phuc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `colors`
+-- Cấu trúc bảng cho bảng `colors`
 --
 
 CREATE TABLE `colors` (
@@ -116,7 +126,7 @@ CREATE TABLE `colors` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
@@ -132,18 +142,23 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `orders`
+-- Đang đổ dữ liệu cho bảng `orders`
 --
 
 INSERT INTO `orders` (`id`, `create_at`, `update_at`, `address`, `user_id`, `note`, `order_username`, `payment_type`, `phone`) VALUES
 (4, '2023-05-27 15:24:36.520000', '2023-05-27 15:24:36.520000', 'e4et34', 12, 'dfrgv', 'ăf', 'COD', '35344'),
 (5, '2023-05-27 15:27:34.394000', '2023-05-27 15:27:34.394000', 'eawfs', 12, 'èw', 'sâf', 'COD', 'rger'),
-(6, '2023-05-27 15:28:25.582000', '2023-05-27 15:28:25.582000', '43634', 12, 'ewgfer', 'âgwe', 'COD', '42534');
+(6, '2023-05-27 15:28:25.582000', '2023-05-27 15:28:25.582000', '43634', 12, 'ewgfer', 'âgwe', 'COD', '42534'),
+(7, '2023-05-27 16:19:46.013000', '2023-05-27 16:19:46.013000', '17/10 khu phố Tân Lập , Phường Đông Hòa , Thành phố Dĩ An ,Tỉnh Bình Dương .', 13, 'âssasdsa', 'Võ Chí Nguyên', 'COD', '0811235460'),
+(8, '2023-05-27 16:32:45.626000', '2023-05-27 16:32:45.626000', '17/10 khu phố Tân Lập', 13, 'asdads', 'asdsas', 'COD', 'asdsad'),
+(9, '2023-05-28 21:13:34.787000', '2023-05-28 21:13:34.787000', 'Xã Hiếu Phụng , Huyện  Vũng Liêm ,Tỉnh Vĩnh Long .', 13, 'wadass', 'Võ Chí Nguyên', 'COD', '1213123123'),
+(10, '2023-05-28 22:16:52.208000', '2023-05-28 22:16:52.208000', '17/10 khu phố Tân Lập , Phường Đông Hòa , Thành phố Dĩ An ,Tỉnh Bình Dương .', 13, 'abc', 'Võ Chí Nguyên', 'COD', '0811235460'),
+(11, '2023-05-29 08:55:30.067000', '2023-05-29 08:55:30.067000', '17/10 khu phố Tân Lập , Phường Đông Hòa , Thành phố Dĩ An ,Tỉnh Bình Dương .', 13, 'sdaasda', 'Võ Chí Nguyên', 'COD', '0811235460');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_items`
+-- Cấu trúc bảng cho bảng `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -156,7 +171,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order_items`
+-- Đang đổ dữ liệu cho bảng `order_items`
 --
 
 INSERT INTO `order_items` (`id`, `create_at`, `update_at`, `quantity`, `order_id`, `variant_id`) VALUES
@@ -167,12 +182,24 @@ INSERT INTO `order_items` (`id`, `create_at`, `update_at`, `quantity`, `order_id
 (13, '2023-05-27 15:27:34.394000', '2023-05-27 15:27:34.394000', 1, 5, 38),
 (14, '2023-05-27 15:28:25.582000', '2023-05-27 15:28:25.582000', 1, 6, 52),
 (15, '2023-05-27 15:28:25.582000', '2023-05-27 15:28:25.582000', 1, 6, 53),
-(16, '2023-05-27 15:28:25.588000', '2023-05-27 15:28:25.588000', 9, 6, 54);
+(16, '2023-05-27 15:28:25.588000', '2023-05-27 15:28:25.588000', 9, 6, 54),
+(17, '2023-05-27 16:19:46.013000', '2023-05-27 16:19:46.013000', 1, 7, 28),
+(18, '2023-05-27 16:19:46.013000', '2023-05-27 16:19:46.013000', 2, 7, 29),
+(19, '2023-05-27 16:19:46.013000', '2023-05-27 16:19:46.013000', 1, 7, 30),
+(20, '2023-05-27 16:19:46.020000', '2023-05-27 16:19:46.020000', 1, 7, 32),
+(21, '2023-05-27 16:32:45.627000', '2023-05-27 16:32:45.627000', 1, 8, 27),
+(22, '2023-05-27 16:32:45.638000', '2023-05-27 16:32:45.638000', 5, 8, 63),
+(23, '2023-05-28 21:13:34.787000', '2023-05-28 21:13:34.787000', 5, 9, 27),
+(24, '2023-05-28 21:13:34.787000', '2023-05-28 21:13:34.787000', 4, 9, 29),
+(25, '2023-05-28 22:16:52.214000', '2023-05-28 22:16:52.214000', 1, 10, 27),
+(26, '2023-05-28 22:16:52.220000', '2023-05-28 22:16:52.220000', 1, 10, 30),
+(27, '2023-05-29 08:55:30.067000', '2023-05-29 08:55:30.067000', 1, 11, 219),
+(28, '2023-05-29 08:55:30.078000', '2023-05-29 08:55:30.078000', 4, 11, 223);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
@@ -187,7 +214,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `products`
+-- Đang đổ dữ liệu cho bảng `products`
 --
 
 INSERT INTO `products` (`id`, `create_at`, `update_at`, `description`, `name`, `price`, `slug`, `category_id`) VALUES
@@ -211,12 +238,17 @@ INSERT INTO `products` (`id`, `create_at`, `update_at`, `description`, `name`, `
 (33, '2023-05-27 15:13:37.857000', '2023-05-27 15:13:37.857000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 170px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo sơ mi nữ chất liệu mềm mát</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Kiểu dáng croptop ôm eo cực tôn dáng</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Nữ tính nhẹ nhàng nhưng vô cùng hút mắt với phần nơ phía sau</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Tay suông rủ giúp che đi phần bắp tay to&nbsp;</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Có thể kết hợp cùng quần âu, chân váy thanh lịch để nàng diện đi làm, đi chơi</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Sơ Mi Nữ Kiểu Croptop Tay Ngắn Đai Nơ', '399000.00', 'ao-so-mi-nu-kieu-croptop-tay-ngan-ai-no', 8),
 (34, '2023-05-27 15:16:12.874000', '2023-05-27 15:16:12.874000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 146px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo sơ mi nữ dài tay thiết kế hiện đại</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Chất liệu vải cotton mềm mại, thấm hút tốt, thoải mái khi mặc</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thiết kế túi ốp khoẻ khoắn nhưng không cứng nhắc</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thích hợp phối cùng quần âu, quần jean, quần short để đi làm, đi chơi, đi học...</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Sơ Mi Nữ Tay Dài Túi Ốp', '469000.00', 'ao-so-mi-nu-tay-dai-tui-op', 8),
 (35, '2023-05-27 15:19:46.701000', '2023-05-27 15:19:46.701000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 194px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo sơ mi nữ tay dài làm từ&nbsp;vải voan mềm mại</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Kiểu dáng suông thoải mái cùng đường may tinh tế, chắc chắn</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Cổ bèo cùng thiết kế tay dài nữ tính</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Có thể phối với chân váy hoá \"nàng thơ\" dịu dàng hay quần âu trở thành quý cô thanh lịch</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thích hợp để nàng mặc đi làm, đi chơi, dạo phố</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Sơ Mi Nữ Tay Dài Cổ Bèo Dáng Suông', '384000.00', 'ao-so-mi-nu-tay-dai-co-beo-dang-suong', 8),
-(36, '2023-05-27 15:21:50.648000', '2023-05-27 15:21:50.648000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 146px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo sơ mi nữ suông tay dài</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thiết kế trẻ trung thêu hình gấu ở ngực tạo điểm nhấn riêng biệt</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Chất vải Rayon, polyester giúp đứng form và hạn chế nhăn nhàu rất tốt</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo mềm, co giãn vừa đủ, thoải mái cho người sử dụng</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Sơ Mi Nữ Tay Dài Dáng Suông Ngực Thêu Gấu', '279000.00', 'ao-so-mi-nu-tay-dai-dang-suong-nguc-theu-gau', 8);
+(36, '2023-05-27 15:21:50.648000', '2023-05-27 15:21:50.648000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 146px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo sơ mi nữ suông tay dài</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thiết kế trẻ trung thêu hình gấu ở ngực tạo điểm nhấn riêng biệt</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Chất vải Rayon, polyester giúp đứng form và hạn chế nhăn nhàu rất tốt</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo mềm, co giãn vừa đủ, thoải mái cho người sử dụng</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Sơ Mi Nữ Tay Dài Dáng Suông Ngực Thêu Gấu', '279000.00', 'ao-so-mi-nu-tay-dai-dang-suong-nguc-theu-gau', 8),
+(38, '2023-05-28 21:48:16.897000', '2023-05-28 21:48:16.897000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 296px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\"><img alt=\"Áo Polo Nữ Tay Ngắn Pique Mắt Chim Phối Bo Thoáng Khí\" data-thumb=\"original\" original-height=\"120\" original-width=\"820\" src=\"https://bizweb.dktcdn.net/100/438/408/files/product-highlight-mat-chim-6a406297-73e2-43fa-9be7-23531d98a7c2.jpg?v=1681791176822\" style=\"border: 0px none; max-width: 100%; height: auto; margin: 0px 0px 10px;\"></p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Chất liệu mắt chim hiệu ứng độc đáo, mới lạ và trẻ trung</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Chất liệu áo thoáng mát, thấm hút tốt có độ bền cao</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Co giãn tốt mà vẫn giữ được form dáng và bền màu</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Thiết kế áo polo nữ với kiểu dáng suông cơ bản nên rất dễ mặc với mọi người</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo polo nữ form rộng sẽ giúp bạn có thể mặc thoải mái mỗi ngày, tự tin trong mọi hoạt động sinh hoạt hàng ngày</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Polo Nữ Tay Ngắn Pique Mắt Chim Phối Bo Thoáng Khí', '290000.00', 'ao-polo-nu-tay-ngan-pique-mat-chim-phoi-bo-thoang-khi', 5),
+(39, '2023-05-28 21:52:38.424000', '2023-05-28 21:52:38.424000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 146px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo polo nữ&nbsp;Airycool làm từ&nbsp;85% Freezing Polyamide + 15% Spandex</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Mặc siêu mát nhờ công nghệ làm mát FREEZING&nbsp;tiên tiến</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Mềm mịn, thấm hút tốt và khô nhanh</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Co giãn tốt, giữ phom trong quá trình sử dụng</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Polo Nữ Airycool In YODY', '290000.00', 'ao-polo-nu-airycool-in-yody', 5);
+INSERT INTO `products` (`id`, `create_at`, `update_at`, `description`, `name`, `price`, `slug`, `category_id`) VALUES
+(40, '2023-05-28 21:56:45.341000', '2023-05-28 21:56:45.341000', '<div style=\"color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"property-outstanding\" style=\"padding: 19px 12px;\">Đặc tính nổi bật</div></div><div class=\"accordion-panel\" style=\"max-height: 296px; overflow: hidden; transition: max-height 0.25s linear 0s; color: rgb(0, 0, 0); font-family: SVN-Gilroy, sans-serif; font-size: 18px;\"><div class=\"accordion-content\" style=\"font-family: SVN-Gilroy; font-size: 14px; line-height: 24px; padding-top: 4px; padding-bottom: 12px;\"><div id=\"product-dactinh\" class=\"km-hot\"><div class=\"box-km\"><h2 class=\"title_km\" style=\"margin-bottom: 10px; font-family: &quot;SVN-Gilroy Bold&quot;; line-height: 1.4; color: inherit; font-size: 16px;\"></h2><div class=\"box-promotion\"><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\"><img alt=\"Áo Polo Nữ Cafe Cổ Trơn Siêu Nhẹ Thoáng Khí\" data-thumb=\"original\" original-height=\"120\" original-width=\"820\" src=\"https://bizweb.dktcdn.net/100/438/408/files/product-highlight-scafe-80888856-0161-4fb4-92a1-c5604517ca12.jpg?v=1681783916892\" style=\"border: 0px none; max-width: 100%; height: auto; margin: 0px 0px 10px;\"></p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Áo polo Vải Cafe được làm từ bột bã cafe có đặc tính siêu nhẹ, siêu mát</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Nổi bật vượt trội với khả năng kiểm soát mùi cơ thể tự nhiên và chống tia UV</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">An toàn cho da, thân thiện môi trường</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">Các đường nét cắt vải được làm mềm mại hơn, form áo tối ưu cho nữ giới giúp chị em có thể tôn lên vóc dáng thon gọn của mình</p><p style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 25px; position: relative;\">YODY - Look good. Feel good.</p></div></div></div></div></div>', 'Áo Polo Nữ Cafe Cổ Trơn Siêu Nhẹ Thoáng Khí', '290000.00', 'ao-polo-nu-cafe-co-tron-sieu-nhe-thoang-khi', 5),
+(41, '2023-05-29 11:30:49.115000', '2023-05-29 11:30:49.115000', 'demo&nbsp;', 'sản phâm demo', '290000.00', 'san-pham-demo', 5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_image`
+-- Cấu trúc bảng cho bảng `product_image`
 --
 
 CREATE TABLE `product_image` (
@@ -229,7 +261,7 @@ CREATE TABLE `product_image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `product_image`
+-- Đang đổ dữ liệu cho bảng `product_image`
 --
 
 INSERT INTO `product_image` (`id`, `create_at`, `update_at`, `name`, `src`, `product_id`) VALUES
@@ -448,12 +480,61 @@ INSERT INTO `product_image` (`id`, `create_at`, `update_at`, `name`, `src`, `pro
 (347, '2023-05-27 15:21:50.652000', '2023-05-27 15:21:50.652000', 'LP3Z8NQL-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/69786dfa29de43dcb7dc8bca4e7a22d0.webp', 36),
 (348, '2023-05-27 15:21:50.654000', '2023-05-27 15:21:50.654000', 'LP3Z8NQL-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/fabe7c3eb572424e988c3c98f9f5538c.webp', 36),
 (349, '2023-05-27 15:21:50.655000', '2023-05-27 15:21:50.655000', 'LP3Z8NQL-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/261b93e160c84bc0a9bebcd5eb772624.webp', 36),
-(350, '2023-05-27 15:21:50.655000', '2023-05-27 15:21:50.655000', 'LP3Z8NQL-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/58c489243b0b4d1884b782f992c0da3f.webp', 36);
+(350, '2023-05-27 15:21:50.655000', '2023-05-27 15:21:50.655000', 'LP3Z8NQL-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/58c489243b0b4d1884b782f992c0da3f.webp', 36),
+(373, '2023-05-28 21:48:16.926000', '2023-05-28 21:48:16.926000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/363bdeab0b974302980ee679e4ee5aa5.webp', 38),
+(374, '2023-05-28 21:48:16.927000', '2023-05-28 21:48:16.927000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/7d7b274c32b146aa87bd5dfc7078259d.webp', 38),
+(375, '2023-05-28 21:48:16.927000', '2023-05-28 21:48:16.927000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/1cff8da998754490ab87cb2f11264699.webp', 38),
+(376, '2023-05-28 21:48:16.928000', '2023-05-28 21:48:16.928000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/79a3ed6905a643acb2e07a5e29c5ee51.webp', 38),
+(377, '2023-05-28 21:48:16.928000', '2023-05-28 21:48:16.928000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/1ba0fc78278b4d138b6e391c93557bc6.webp', 38),
+(378, '2023-05-28 21:48:16.928000', '2023-05-28 21:48:16.928000', '1GJ8GE4W-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/4c7d02a38bac4144b95b7404ab369d89.webp', 38),
+(379, '2023-05-28 21:48:16.929000', '2023-05-28 21:48:16.929000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/5075f83742224818aa2b694808087b19.webp', 38),
+(380, '2023-05-28 21:48:16.933000', '2023-05-28 21:48:16.933000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/c68b0e3acb9146e0b9209c1f5bdbdc2d.webp', 38),
+(381, '2023-05-28 21:48:16.934000', '2023-05-28 21:48:16.934000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/42d47115750a4625b53b266a5d79009f.webp', 38),
+(382, '2023-05-28 21:48:16.934000', '2023-05-28 21:48:16.934000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/665d796856b74ab9a60887b660b6ebac.webp', 38),
+(383, '2023-05-28 21:48:16.934000', '2023-05-28 21:48:16.934000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/ad96435749a841ad95f04096d4c59dd1.webp', 38),
+(384, '2023-05-28 21:48:16.935000', '2023-05-28 21:48:16.935000', '7H7CCKNO-TRANG', 'http://localhost:8080/api/v1/admin/FileUpload/3154685e269b4778923dfc86a8327a7a.webp', 38),
+(385, '2023-05-28 21:48:16.935000', '2023-05-28 21:48:16.935000', 'SHRTTZTY-HONG', 'http://localhost:8080/api/v1/admin/FileUpload/33513418c1da45338580567bf468c9dd.webp', 38),
+(386, '2023-05-28 21:48:16.935000', '2023-05-28 21:48:16.935000', 'SHRTTZTY-HONG', 'http://localhost:8080/api/v1/admin/FileUpload/b9ac5230a5e142ab81698839abab2b41.webp', 38),
+(387, '2023-05-28 21:48:16.936000', '2023-05-28 21:48:16.936000', 'SHRTTZTY-HONG', 'http://localhost:8080/api/v1/admin/FileUpload/feb7e0964b294ed681a74c6d8910ec6f.webp', 38),
+(388, '2023-05-28 21:48:16.936000', '2023-05-28 21:48:16.936000', 'SHRTTZTY-HONG', 'http://localhost:8080/api/v1/admin/FileUpload/e29e462cbf2144a6b197a8ddd065274d.webp', 38),
+(389, '2023-05-28 21:48:16.936000', '2023-05-28 21:48:16.936000', 'SHRTTZTY-HONG', 'http://localhost:8080/api/v1/admin/FileUpload/da9e2cfb19e442dbb47e0f6fc586c462.webp', 38),
+(390, '2023-05-28 21:52:38.446000', '2023-05-28 21:52:38.446000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/b00d022a0ef84edda273a3d06d4ca7e5.webp', 39),
+(391, '2023-05-28 21:52:38.446000', '2023-05-28 21:52:38.446000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/7881c887446449e7aad7def904bf19c1.webp', 39),
+(392, '2023-05-28 21:52:38.446000', '2023-05-28 21:52:38.446000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/1d49dc76fb754635bd61da79c4236e7c.webp', 39),
+(393, '2023-05-28 21:52:38.455000', '2023-05-28 21:52:38.455000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/26237b6944944f1ab3d92fef3f7ad8e3.webp', 39),
+(394, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/e3458279ff334e0f9a390297a263e385.webp', 39),
+(395, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'H42SFYLT-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/f078c7c8e97b461488ffd698a68e8c24.webp', 39),
+(396, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'FM5MP2J0-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/fac1a1c9669b4ee1a440b94d1f8ea0b6.webp', 39),
+(397, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'FM5MP2J0-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/525aee15ae884cc5bb06e834c783c456.webp', 39),
+(398, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'FM5MP2J0-XANH', 'http://localhost:8080/api/v1/admin/FileUpload/0e5ac48e76f541cba94a0e37484984d4.webp', 39),
+(399, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/4c917446a20c46099b1299a241df96fd.webp', 40),
+(400, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/e8e53e7264db44668f723f7225d75165.webp', 40),
+(401, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/d2c2178189e74594a2fe4764c7519344.webp', 40),
+(402, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/d72786730ac64b25858395ee2de547c9.webp', 40),
+(403, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/b95acdec825b45a093cec04b75e6ad5b.webp', 40),
+(404, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', '51SO6NJT-ĐO', 'http://localhost:8080/api/v1/admin/FileUpload/cdab0971dcb84ee88447eb817179d677.webp', 40),
+(405, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/96ecf030fa9e471b92a5c742f1a97760.webp', 40),
+(406, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/926bf7540f5e422086d25c150673405c.webp', 40),
+(407, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/a92ff019d7434646b684eb97c256b7b7.webp', 40),
+(408, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/de59581e03bf442eb01a83b7a3479a1e.webp', 40),
+(409, '2023-05-28 21:56:45.371000', '2023-05-28 21:56:45.371000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/6933c49fa10545eebead5e3d3cd0cdba.webp', 40),
+(410, '2023-05-28 21:56:45.387000', '2023-05-28 21:56:45.387000', 'PFXEHJHG-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/d6a39b137e1c4f8e94dc0a9dcc8315b4.webp', 40),
+(411, '2023-05-29 11:30:49.115000', '2023-05-29 11:30:49.115000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/5c0e288a4f5c4889a88da72d8925f075.webp', 41),
+(412, '2023-05-29 11:30:49.115000', '2023-05-29 11:30:49.115000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/887c12fdb7b44b0c8cd065329956f45a.webp', 41),
+(413, '2023-05-29 11:30:49.115000', '2023-05-29 11:30:49.115000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/90b9048e03824b3caa4ca7eca92f40ec.webp', 41),
+(414, '2023-05-29 11:30:49.115000', '2023-05-29 11:30:49.115000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/0c11baaeacb44679a3a7f4202d3f19c4.webp', 41),
+(415, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/c99040ef668644eabd84c8a9aaa7f3a2.webp', 41),
+(416, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', 'KMCNWQQS-ĐEN', 'http://localhost:8080/api/v1/admin/FileUpload/b135f5c3c5e3446097b550072c668875.webp', 41),
+(417, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', '5N2GQ8LS-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/4a7dca892cb44b6cb6a35aa1adc26f76.webp', 41),
+(418, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', '5N2GQ8LS-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/93926bcbeecc4bbe93905c7b8b16ac6e.webp', 41),
+(419, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', '5N2GQ8LS-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/e3f108888b8644c1a14f3087e209fab7.webp', 41),
+(420, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', '5N2GQ8LS-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/a78acf7512464c5180f221b1e7399c58.webp', 41),
+(421, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', '5N2GQ8LS-NAU', 'http://localhost:8080/api/v1/admin/FileUpload/ac4041c239f144309c73720a56d10c6d.webp', 41);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_variants`
+-- Cấu trúc bảng cho bảng `product_variants`
 --
 
 CREATE TABLE `product_variants` (
@@ -468,7 +549,7 @@ CREATE TABLE `product_variants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `product_variants`
+-- Đang đổ dữ liệu cho bảng `product_variants`
 --
 
 INSERT INTO `product_variants` (`id`, `create_at`, `update_at`, `color`, `image`, `size`, `sku`, `product_id`) VALUES
@@ -596,12 +677,33 @@ INSERT INTO `product_variants` (`id`, `create_at`, `update_at`, `color`, `image`
 (206, '2023-05-27 15:21:50.656000', '2023-05-27 15:21:50.656000', 'Trắng', 'http://localhost:8080/api/v1/admin/FileUpload/c821a8e18df64db2bfe4d715a3af66ec.webp', 'L', 'KRP6PG7U-TRANG', 36),
 (207, '2023-05-27 15:21:50.656000', '2023-05-27 15:21:50.656000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/69786dfa29de43dcb7dc8bca4e7a22d0.webp', 'XL', 'LP3Z8NQL-XANH', 36),
 (208, '2023-05-27 15:21:50.656000', '2023-05-27 15:21:50.656000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/69786dfa29de43dcb7dc8bca4e7a22d0.webp', 'S', 'LP3Z8NQL-XANH', 36),
-(209, '2023-05-27 15:21:50.656000', '2023-05-27 15:21:50.656000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/69786dfa29de43dcb7dc8bca4e7a22d0.webp', 'L', 'LP3Z8NQL-XANH', 36);
+(209, '2023-05-27 15:21:50.656000', '2023-05-27 15:21:50.656000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/69786dfa29de43dcb7dc8bca4e7a22d0.webp', 'L', 'LP3Z8NQL-XANH', 36),
+(219, '2023-05-28 21:48:16.937000', '2023-05-28 21:48:16.937000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/363bdeab0b974302980ee679e4ee5aa5.webp', 'S', '1GJ8GE4W-XANH', 38),
+(220, '2023-05-28 21:48:16.938000', '2023-05-28 21:48:16.938000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/363bdeab0b974302980ee679e4ee5aa5.webp', 'M', '1GJ8GE4W-XANH', 38),
+(221, '2023-05-28 21:48:16.938000', '2023-05-28 21:48:16.938000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/363bdeab0b974302980ee679e4ee5aa5.webp', 'L', '1GJ8GE4W-XANH', 38),
+(222, '2023-05-28 21:48:16.939000', '2023-05-28 21:48:16.939000', 'Trắng', 'http://localhost:8080/api/v1/admin/FileUpload/5075f83742224818aa2b694808087b19.webp', 'XL', '7H7CCKNO-TRANG', 38),
+(223, '2023-05-28 21:48:16.939000', '2023-05-28 21:48:16.939000', 'Trắng', 'http://localhost:8080/api/v1/admin/FileUpload/5075f83742224818aa2b694808087b19.webp', 'S', '7H7CCKNO-TRANG', 38),
+(224, '2023-05-28 21:48:16.939000', '2023-05-28 21:48:16.939000', 'Trắng', 'http://localhost:8080/api/v1/admin/FileUpload/5075f83742224818aa2b694808087b19.webp', 'L', '7H7CCKNO-TRANG', 38),
+(225, '2023-05-28 21:48:16.940000', '2023-05-28 21:48:16.940000', 'Hồng', 'http://localhost:8080/api/v1/admin/FileUpload/33513418c1da45338580567bf468c9dd.webp', 'XL', 'SHRTTZTY-HONG', 38),
+(226, '2023-05-28 21:48:16.940000', '2023-05-28 21:48:16.940000', 'Hồng', 'http://localhost:8080/api/v1/admin/FileUpload/33513418c1da45338580567bf468c9dd.webp', 'S', 'SHRTTZTY-HONG', 38),
+(227, '2023-05-28 21:48:16.940000', '2023-05-28 21:48:16.940000', 'Hồng', 'http://localhost:8080/api/v1/admin/FileUpload/33513418c1da45338580567bf468c9dd.webp', 'M', 'SHRTTZTY-HONG', 38),
+(228, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'Đen', 'http://localhost:8080/api/v1/admin/FileUpload/b00d022a0ef84edda273a3d06d4ca7e5.webp', 'XL', 'H42SFYLT-ĐEN', 39),
+(229, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'Đen', 'http://localhost:8080/api/v1/admin/FileUpload/b00d022a0ef84edda273a3d06d4ca7e5.webp', 'S', 'H42SFYLT-ĐEN', 39),
+(230, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/fac1a1c9669b4ee1a440b94d1f8ea0b6.webp', 'XL', 'FM5MP2J0-XANH', 39),
+(231, '2023-05-28 21:52:38.456000', '2023-05-28 21:52:38.456000', 'Xanh', 'http://localhost:8080/api/v1/admin/FileUpload/fac1a1c9669b4ee1a440b94d1f8ea0b6.webp', 'S', 'FM5MP2J0-XANH', 39),
+(232, '2023-05-28 21:56:45.387000', '2023-05-28 21:56:45.387000', 'Đỏ', 'http://localhost:8080/api/v1/admin/FileUpload/4c917446a20c46099b1299a241df96fd.webp', 'XL', '51SO6NJT-ĐO', 40),
+(233, '2023-05-28 21:56:45.387000', '2023-05-28 21:56:45.387000', 'Đỏ', 'http://localhost:8080/api/v1/admin/FileUpload/4c917446a20c46099b1299a241df96fd.webp', 'S', '51SO6NJT-ĐO', 40),
+(234, '2023-05-28 21:56:45.387000', '2023-05-28 21:56:45.387000', 'Nâu', 'http://localhost:8080/api/v1/admin/FileUpload/96ecf030fa9e471b92a5c742f1a97760.webp', 'XL', 'PFXEHJHG-NAU', 40),
+(235, '2023-05-28 21:56:45.393000', '2023-05-28 21:56:45.393000', 'Nâu', 'http://localhost:8080/api/v1/admin/FileUpload/96ecf030fa9e471b92a5c742f1a97760.webp', 'S', 'PFXEHJHG-NAU', 40),
+(236, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', 'Đen', 'http://localhost:8080/api/v1/admin/FileUpload/5c0e288a4f5c4889a88da72d8925f075.webp', 'XL', 'KMCNWQQS-ĐEN', 41),
+(237, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', 'Đen', 'http://localhost:8080/api/v1/admin/FileUpload/5c0e288a4f5c4889a88da72d8925f075.webp', 'S', 'KMCNWQQS-ĐEN', 41),
+(238, '2023-05-29 11:30:49.123000', '2023-05-29 11:30:49.123000', 'Nâu', 'http://localhost:8080/api/v1/admin/FileUpload/4a7dca892cb44b6cb6a35aa1adc26f76.webp', 'XL', '5N2GQ8LS-NAU', 41),
+(239, '2023-05-29 11:30:49.131000', '2023-05-29 11:30:49.131000', 'Nâu', 'http://localhost:8080/api/v1/admin/FileUpload/4a7dca892cb44b6cb6a35aa1adc26f76.webp', 'S', '5N2GQ8LS-NAU', 41);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -612,7 +714,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `create_at`, `update_at`, `name`) VALUES
@@ -622,7 +724,7 @@ INSERT INTO `roles` (`id`, `create_at`, `update_at`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sizes`
+-- Cấu trúc bảng cho bảng `sizes`
 --
 
 CREATE TABLE `sizes` (
@@ -633,7 +735,7 @@ CREATE TABLE `sizes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sizes`
+-- Đang đổ dữ liệu cho bảng `sizes`
 --
 
 INSERT INTO `sizes` (`id`, `create_at`, `update_at`, `name`) VALUES
@@ -645,7 +747,7 @@ INSERT INTO `sizes` (`id`, `create_at`, `update_at`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -658,18 +760,19 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `create_at`, `update_at`, `email`, `fullname`, `password`) VALUES
-(10, '2023-03-22 13:15:19.026000', '2023-03-22 13:15:19.026000', 'nguyendev2001@gmail.com', NULL, '$2a$10$fEYHAPNhksDC175WoD.JrOat4BiausNnd0u4lDHeQFLrNMWhluL1e'),
+(10, '2023-03-22 13:15:19.026000', '2023-03-22 13:15:19.026000', 'admin@gmail.com', NULL, '$2a$10$fEYHAPNhksDC175WoD.JrOat4BiausNnd0u4lDHeQFLrNMWhluL1e'),
 (11, '2023-05-27 14:26:50.808000', '2023-05-27 14:26:50.808000', 'nhuan@gmail.com', NULL, '$2a$10$VP0Jz2DQgvy6unhNBekvQ.wG/d3clqbzNZkqV31u0YrnoNCzlFDpi'),
-(12, '2023-05-27 15:24:03.523000', '2023-05-27 15:24:03.523000', '19130164@st.hcmuaf.edu.vn', NULL, '$2a$10$aRTZLwzXpbNwBLNEBrnuN.wu8AHsiBtYNoomN76gPA0eMZ.1XPctm');
+(12, '2023-05-27 15:24:03.523000', '2023-05-27 15:24:03.523000', '19130164@st.hcmuaf.edu.vn', NULL, '$2a$10$aRTZLwzXpbNwBLNEBrnuN.wu8AHsiBtYNoomN76gPA0eMZ.1XPctm'),
+(13, '2023-05-27 16:18:42.948000', '2023-05-27 16:18:42.948000', '19130154@st.hcmuaf.edu.vn', NULL, '$2a$10$PBWp0e.URc66rfoAoS.aZ.UdtS3KgcCps4IUl8DGzPQdNPUuMPizG');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_role`
+-- Cấu trúc bảng cho bảng `user_role`
 --
 
 CREATE TABLE `user_role` (
@@ -678,28 +781,29 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user_role`
+-- Đang đổ dữ liệu cho bảng `user_role`
 --
 
 INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
 (10, 1),
 (10, 2),
 (11, 2),
-(12, 2);
+(12, 2),
+(13, 2);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `carts`
+-- Chỉ mục cho bảng `carts`
 --
 ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKb5o626f86h46m4s7ms6ginnop` (`user_id`);
 
 --
--- Indexes for table `cart_item`
+-- Chỉ mục cho bảng `cart_item`
 --
 ALTER TABLE `cart_item`
   ADD PRIMARY KEY (`id`),
@@ -707,26 +811,26 @@ ALTER TABLE `cart_item`
   ADD KEY `FKpbcx1acwbqj9esdr9hum0o7v7` (`variant_id`);
 
 --
--- Indexes for table `categories`
+-- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `colors`
+-- Chỉ mục cho bảng `colors`
 --
 ALTER TABLE `colors`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK32ql8ubntj5uh44ph9659tiih` (`user_id`);
 
 --
--- Indexes for table `order_items`
+-- Chỉ mục cho bảng `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
@@ -734,177 +838,177 @@ ALTER TABLE `order_items`
   ADD KEY `FKemq71edpbn9wsxnxncfn1algp` (`variant_id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKog2rp4qthbtt2lfyhfo32lsw9` (`category_id`);
 
 --
--- Indexes for table `product_image`
+-- Chỉ mục cho bảng `product_image`
 --
 ALTER TABLE `product_image`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK1n91c4vdhw8pa4frngs4qbbvs` (`product_id`);
 
 --
--- Indexes for table `product_variants`
+-- Chỉ mục cho bảng `product_variants`
 --
 ALTER TABLE `product_variants`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKosqitn4s405cynmhb87lkvuau` (`product_id`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sizes`
+-- Chỉ mục cho bảng `sizes`
 --
 ALTER TABLE `sizes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_role`
+-- Chỉ mục cho bảng `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`user_id`,`role_id`),
   ADD KEY `FKt7e7djp752sqn6w22i6ocqy6q` (`role_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `carts`
+-- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `cart_item`
+-- AUTO_INCREMENT cho bảng `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `colors`
+-- AUTO_INCREMENT cho bảng `colors`
 --
 ALTER TABLE `colors`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `order_items`
+-- AUTO_INCREMENT cho bảng `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `product_image`
+-- AUTO_INCREMENT cho bảng `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
 
 --
--- AUTO_INCREMENT for table `product_variants`
+-- AUTO_INCREMENT cho bảng `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `sizes`
+-- AUTO_INCREMENT cho bảng `sizes`
 --
 ALTER TABLE `sizes`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `carts`
+-- Các ràng buộc cho bảng `carts`
 --
 ALTER TABLE `carts`
   ADD CONSTRAINT `FKb5o626f86h46m4s7ms6ginnop` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `cart_item`
+-- Các ràng buộc cho bảng `cart_item`
 --
 ALTER TABLE `cart_item`
   ADD CONSTRAINT `FKlqwuo55w1gm4779xcu3t4wnrd` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`),
   ADD CONSTRAINT `FKpbcx1acwbqj9esdr9hum0o7v7` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`);
 
 --
--- Constraints for table `orders`
+-- Các ràng buộc cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK32ql8ubntj5uh44ph9659tiih` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `order_items`
+-- Các ràng buộc cho bảng `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `FKbioxgbv59vetrxe0ejfubep1w` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `FKemq71edpbn9wsxnxncfn1algp` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`);
 
 --
--- Constraints for table `products`
+-- Các ràng buộc cho bảng `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `FKog2rp4qthbtt2lfyhfo32lsw9` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 --
--- Constraints for table `product_image`
+-- Các ràng buộc cho bảng `product_image`
 --
 ALTER TABLE `product_image`
   ADD CONSTRAINT `FK1n91c4vdhw8pa4frngs4qbbvs` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
--- Constraints for table `product_variants`
+-- Các ràng buộc cho bảng `product_variants`
 --
 ALTER TABLE `product_variants`
   ADD CONSTRAINT `FKosqitn4s405cynmhb87lkvuau` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
--- Constraints for table `user_role`
+-- Các ràng buộc cho bảng `user_role`
 --
 ALTER TABLE `user_role`
   ADD CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),

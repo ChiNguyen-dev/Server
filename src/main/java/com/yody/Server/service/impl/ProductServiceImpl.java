@@ -101,6 +101,7 @@ public class ProductServiceImpl implements IProductService {
 
         Category category = this.categoryRepository.findById(dataProductReqDTO.getProduct().getCategoryId())
                 .orElseThrow(() -> new NotFondException("Category Not isExist in Database."));
+
         Product product = this.productRepository.save(this.productMapper.toEntity(dataProductReqDTO.getProduct(), category));
 
         images.forEach(imageVariantDTO -> {
