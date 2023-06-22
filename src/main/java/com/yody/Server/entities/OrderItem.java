@@ -19,7 +19,9 @@ public class OrderItem extends  BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "variant_id")
     private ProductVariant variant;
-
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

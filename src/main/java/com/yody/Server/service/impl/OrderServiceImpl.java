@@ -36,6 +36,7 @@ public class OrderServiceImpl implements IOrderService {
         cart.getItems().forEach(line -> {
             OrderItem item = OrderItem.builder()
                     .variant(line.getProductVariant())
+                    .product(line.getProduct())
                     .quantity(line.getQuantity())
                     .build();
             lines.add(item);
