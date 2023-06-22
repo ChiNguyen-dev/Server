@@ -6,13 +6,12 @@ import com.yody.Server.dto.cart.AddToCartDTO;
 import com.yody.Server.dto.cart.CartItemResponseDTO;
 import com.yody.Server.dto.cart.CartResponseDTO;
 import com.yody.Server.entities.*;
-import com.yody.Server.exception.NotFondException;
+import com.yody.Server.service.impl.exception.NotFondException;
 import com.yody.Server.repositories.*;
 import com.yody.Server.service.ICartService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +34,12 @@ public class CartServiceImpl implements ICartService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ProductVariant variant = this.variantRepository.findById(addToCartDTO.getVariantId()).orElseThrow(() -> new NotFondException("variant not found"));
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
+        Product product = variant.getProduct();
         CartItem item;
         if (cart == null) {
             item = CartItem.builder()
                     .productVariant(variant)
+                    .product(product)
                     .quantity(addToCartDTO.getQuantity())
                     .build();
             List<CartItem> items = new ArrayList<>();
@@ -57,6 +58,7 @@ public class CartServiceImpl implements ICartService {
                 item = CartItem.builder()
                         .productVariant(variant)
                         .quantity(addToCartDTO.getQuantity())
+                        .product(product)
                         .build();
                 cart.addToCart(item);
                 item.setCart(cart);
