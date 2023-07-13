@@ -4,7 +4,7 @@ import com.yody.Server.components.OrderMapper;
 import com.yody.Server.dto.order.PlaceOrderRequest;
 import com.yody.Server.dto.order.PlaceOrderResponse;
 import com.yody.Server.entities.*;
-import com.yody.Server.exception.NotFondException;
+import com.yody.Server.service.impl.exception.NotFondException;
 import com.yody.Server.repositories.CartRepository;
 import com.yody.Server.repositories.OrderRepository;
 import com.yody.Server.repositories.ProductVariantRepository;
@@ -36,6 +36,7 @@ public class OrderServiceImpl implements IOrderService {
         cart.getItems().forEach(line -> {
             OrderItem item = OrderItem.builder()
                     .variant(line.getProductVariant())
+                    .product(line.getProduct())
                     .quantity(line.getQuantity())
                     .build();
             lines.add(item);

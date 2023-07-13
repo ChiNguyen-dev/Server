@@ -6,7 +6,7 @@ import com.yody.Server.dto.category.CategoryAdminResDTO;
 import com.yody.Server.dto.category.CategoryAdminReqDTO;
 import com.yody.Server.dto.category.CategoryResDTO;
 import com.yody.Server.entities.Category;
-import com.yody.Server.exception.NotFondException;
+import com.yody.Server.service.impl.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.service.ICategoryService;
 import com.yody.Server.utils.GenerateSlug;

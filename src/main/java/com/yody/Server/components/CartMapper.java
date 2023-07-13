@@ -9,12 +9,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CartMapper {
     private final ModelMapper modelMapper;
-    public CartResponseDTO toDTO(Cart cart){
+
+    public CartResponseDTO toDTO(Cart cart) {
         CartResponseDTO cartResponseDTO = this.modelMapper.map(cart, CartResponseDTO.class);
         return cartResponseDTO;
     }
