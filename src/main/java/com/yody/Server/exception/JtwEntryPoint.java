@@ -1,4 +1,4 @@
-package com.yody.Server.service.impl.exception;
+package com.yody.Server.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

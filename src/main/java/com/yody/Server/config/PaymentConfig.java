@@ -18,12 +18,12 @@ import java.util.*;
 
 @Configuration
 public class PaymentConfig {
-    @Value("$spring.paypal.client-id")
-    private String clientId;
-    @Value("$spring.paypal.client-secret")
-    private String clientSecret;
-    @Value("$spring.paypal.mode")
-    private String mode;
+    @Value("${paypal.client.app}")
+    private String clientId = "ASJfdMs1OO8f9FPtIjUlBYflzf82-DlUfy-HrfZMXK3jBHCwZoVFjS0jQ3rE12lMbBGFu4qhfmt8TCaW";
+    @Value("${paypal.client.secret}")
+    private String clientSecret = "EDBr7ZLm4B0pXs7KYctP0Ma8rpmjydKQnZcoyB5N_KOcFzc5Bm8ZDX0qa3Cd1EDoINYx66O_5SmudCdo";
+    @Value("${paypal.mode}")
+    private String mode = "sandbox";
 
     @Bean
     public Map<String, String> paypalSdkConfig() {
@@ -39,8 +39,9 @@ public class PaymentConfig {
 
     @Bean
     public APIContext apiContext() throws PayPalRESTException {
-        APIContext apiContext = new APIContext(authTokenCredential().getAccessToken());
+        APIContext apiContext = new APIContext(clientId, clientSecret, mode);
         apiContext.setConfigurationMap(paypalSdkConfig());
+
         return apiContext;
     }
 //    public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";

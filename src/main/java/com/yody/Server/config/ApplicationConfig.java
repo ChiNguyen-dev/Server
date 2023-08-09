@@ -1,6 +1,6 @@
 package com.yody.Server.config;
 
-import com.yody.Server.service.impl.exception.JtwEntryPoint;
+import com.yody.Server.exception.JtwEntryPoint;
 import com.yody.Server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

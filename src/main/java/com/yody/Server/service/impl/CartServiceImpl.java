@@ -6,7 +6,7 @@ import com.yody.Server.dto.cart.AddToCartDTO;
 import com.yody.Server.dto.cart.CartItemResponseDTO;
 import com.yody.Server.dto.cart.CartResponseDTO;
 import com.yody.Server.entities.*;
-import com.yody.Server.service.impl.exception.NotFondException;
+import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.*;
 import com.yody.Server.service.ICartService;
 import jakarta.transaction.Transactional;

@@ -1,4 +1,4 @@
-package com.yody.Server.service.impl.exception;
+package com.yody.Server.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

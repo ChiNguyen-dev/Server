@@ -11,7 +11,7 @@ import com.yody.Server.entities.Category;
 import com.yody.Server.entities.Product;
 import com.yody.Server.entities.ProductImage;
 import com.yody.Server.entities.ProductVariant;
-import com.yody.Server.service.impl.exception.NotFondException;
+import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.CategoryRepository;
 import com.yody.Server.repositories.ProductImageReposiory;
 import com.yody.Server.repositories.ProductRepository;

@@ -11,11 +11,11 @@ import com.yody.Server.dto.order.PaymentResDTO;
 import com.yody.Server.dto.order.PlaceOrderRequest;
 import com.yody.Server.dto.order.PlaceOrderResponse;
 import com.yody.Server.service.IOrderService;
+//import com.yody.Server.utils.Utils;
 import com.yody.Server.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +35,6 @@ import java.util.*;
 public class OrderController {
     public static final String URL_PAYPAL_SUCCESS = "pay/success";
     public static final String URL_PAYPAL_CANCEL = "pay/cancel";
-
-    private Logger log = LoggerFactory.getLogger(getClass());
-    @Autowired
     private IOrderService orderService;
     @PostMapping
     public PlaceOrderResponse placeOrder(@RequestBody PlaceOrderRequest orderDTO){

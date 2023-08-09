@@ -4,7 +4,7 @@ import com.yody.Server.components.ProductMapper;
 import com.yody.Server.components.VariantMapper;
 import com.yody.Server.dto.product.ProductResAdminDTO;
 import com.yody.Server.entities.ProductVariant;
-import com.yody.Server.service.impl.exception.NotFondException;
+import com.yody.Server.exception.NotFondException;
 import com.yody.Server.repositories.ProductVariantRepository;
 import com.yody.Server.service.IVariantService;
 import jakarta.transaction.Transactional;

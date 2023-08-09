@@ -1,6 +1,6 @@
 package com.yody.Server.config;
 
-import com.yody.Server.service.impl.exception.JtwEntryPoint;
+import com.yody.Server.exception.JtwEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +28,8 @@ public class SecurityConfig {
                 .authenticationEntryPoint(jtwEntryPoint)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**").hasAnyAuthority("USER")
                 .requestMatchers("/api/v1/auth/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/auth/**").hasAuthority("USER")
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()
